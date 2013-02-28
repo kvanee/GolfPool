@@ -1,0 +1,20 @@
+﻿@model GolfPool.Models.Player
+
+@{
+    ViewBag.Title = "Player";
+}
+
+<h2>Player</h2>
+
+@using (Html.BeginForm())
+{
+    @Html.HiddenFor(x => x.PlayerID)
+    @Html.HiddenFor(x => x.FullName)
+    @Html.DisplayFor(x => x.FullName)
+    <br/>
+
+    @Html.EditorFor(x => x.Rank)
+
+    <br/>
+    <input type="submit" class="btn" value="Save"/>
+}

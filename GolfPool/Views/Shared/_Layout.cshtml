@@ -1,0 +1,70 @@
+﻿@using GolfPool.Helpers
+<!DOCTYPE html>
+<html lang="en-US">
+    <head>
+        <meta charset="utf-8" />
+        <title>Masters Pool - @ViewBag.Title</title>
+        <link href="~/favicon.ico" rel="shortcut icon" type="image/x-icon" />
+        <meta name="viewport" content="width=device-width" />
+        <link href='http://fonts.googleapis.com/css?family=Play:400,700' rel='stylesheet' type='text/css'>
+        @Styles.Render("~/Content/css")
+    </head>
+    <body>
+        <header>
+            <div class="container header">
+                <div class="row">
+                    <div class="span12" >
+                        <div class="row">
+                            <div class="span2" >
+                                <div class="logo pull-right ">                            
+@*                                    <a href="http://www.masters.com"><img src="~/Content/images/Masters-Logo.jpg" alt="Masters Pool" title="Masters Pool"></a>*@
+                                </div>
+                            </div>
+                            <div class="span10 pull-left" >
+                                <nav>
+                                    <div class="nav container">
+                                        <div class="row nav-row">
+                                            
+                                            <div class="span3 nav-item @Html.IsCurrentAction(MVC.Home.Index())">
+                                                <div class="nav-item-shine"></div>
+                                                @Html.ActionMenuItem("Standings",MVC.Home.Index())
+                                            </div>
+                                            <div class="span3 nav-item @Html.IsCurrentAction(MVC.Team.Index())">
+                                                <div class="nav-item-shine"></div>
+                                                @Html.ActionMenuItem("Register",MVC.Team.Index())
+                                            </div>
+                                            <div class="span3 nav-item @Html.IsCurrentAction(MVC.Home.Players())">
+                                                <div class="nav-item-shine"></div>
+                                                @Html.ActionMenuItem("Players",MVC.Home.Players())
+                                            </div>
+                                            <div class="span3 nav-item @Html.IsCurrentAction(MVC.Admin.Index())">
+                                                <div class="nav-item-shine"></div>
+                                                @Html.ActionMenuItem("Admin",MVC.Admin.Index())
+                                            </div>
+                                        </div>
+                                    </div>
+                                </nav>  
+                            </div>
+                        </div>			
+                    </div>
+                </div>
+            </div>
+        </header>
+        <section>
+            <div class="container">
+            @RenderBody()    
+            </div>
+        </section>
+        <footer>
+        </footer>
+        @Scripts.Render("~/bundles/bootstrap")
+        <script type="text/javascript">
+            $(function() {
+                $(".sub-menu-header").click(function() {
+                    $(this).children().slideToggle();
+                });
+            });
+        </script>
+        @RenderSection("scripts", required: false)
+    </body>
+</html>

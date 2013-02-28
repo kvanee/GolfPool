@@ -1,0 +1,69 @@
+﻿body {
+    font-family: 'Play', sans-serif;
+}
+
+header div {
+    height: 60pt;
+}
+
+.header {
+    padding: 0;
+}
+
+.logo img {
+    width: 60pt;
+    height: 60pt;
+    padding-right: 15pt;
+    padding-left: 15pt;
+}
+
+/*Navigation*/
+nav {
+    height: 100%;
+}
+
+.nav {
+    font-family: 'Play', sans-serif;
+    font-weight: 700;
+    font-size: 15pt;
+    padding-left: 0pt;
+    position: relative;
+}
+
+.nav-row .nav-item, .nav-row .nav-item:first-child {
+    margin: 0 0;
+    padding: 0 0;
+}
+
+.nav-item {
+    text-align: center;
+    line-height: 60pt;
+    position: relative;
+}
+    
+.nav-item.selected {
+    background-color: RGB(85, 204, 68);
+    color: #FFF;
+}
+
+.nav-item a {
+    color: #555;
+    display: inline-block;
+    height: 100%;
+    width:100%;
+    z-index: 2;
+}
+
+.nav-item-shine {
+    position: absolute;
+    background: -moz-linear-gradient(top, rgba(255,255,255,0.7) 0%, rgba(255,255,255,0.2) 100%); /* FF3.6+ */
+    background: -webkit-linear-gradient(top, rgba(255,255,255,0.7) 0%,rgba(255,255,255,0.2) 100%); /* Chrome10+,Safari5.1+ */
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#B2ffffff', endColorstr='#33ffffff');
+    height: 50%;
+    width: 100%;
+    z-index: 1;
+}
+
+.sub-menu {
+    display: none;
+}

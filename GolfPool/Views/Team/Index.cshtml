@@ -1,0 +1,58 @@
+﻿@model GolfPool.Controllers.TeamVM
+
+@{
+    ViewBag.Title = "New Team";
+}
+
+@using (Html.BeginForm())
+{
+    @Html.LabelFor(model => model.OwnerName)
+    @Html.EditorFor(x => x.OwnerName)
+    <br/>
+    @Html.LabelFor(model => model.TeamName)
+    @Html.EditorFor(x => x.TeamName)
+    <br/>
+    <br/>
+    @Html.LabelFor(model => model.Group1PlayerID)
+    @Html.DropDownListFor(model => model.Group1PlayerID, Model.Group1PlayerOptions)
+    <br/>
+    <br/>
+    @Html.LabelFor(model => model.Group2PlayerID)
+    @Html.DropDownListFor(model => model.Group2PlayerID, Model.Group2PlayerOptions)
+    <br/>
+    <br/>
+    @Html.LabelFor(model => model.Group3PlayerID)
+    @Html.DropDownListFor(model => model.Group3PlayerID, Model.Group3PlayerOptions)
+    <br/>
+    <br/>
+    @Html.LabelFor(model => model.Group4PlayerID)
+    @Html.DropDownListFor(model => model.Group4PlayerID, Model.Group4PlayerOptions)
+    <br/>
+    <br/>
+    @Html.LabelFor(model => model.Group5PlayerID)
+    @Html.DropDownListFor(model => model.Group5PlayerID, Model.Group5PlayerOptions)
+    <br/>
+    <br/>
+    @Html.LabelFor(model => model.Group6PlayerID)
+    @Html.DropDownListFor(model => model.Group6PlayerID, Model.Group6PlayerOptions)
+    <br/>
+    <br/>
+    @Html.LabelFor(model => model.Group7PlayerID)
+    @Html.DropDownListFor(model => model.Group7PlayerID, Model.Group7PlayerOptions)
+    <br/>
+    <br/>
+    @Html.LabelFor(model => model.Group8PlayerID)
+    @Html.DropDownListFor(model => model.Group8PlayerID, Model.Group8PlayerOptions)
+    <br/>
+    <br/>
+    @Html.LabelFor(model => model.Group9PlayerID)
+    @Html.DropDownListFor(model => model.Group9PlayerID, Model.Group9PlayerOptions)
+    <br/>
+    <br/>
+    @Html.LabelFor(model => model.Group10PlayerID)
+    @Html.DropDownListFor(model => model.Group10PlayerID, Model.Group10PlayerOptions)
+
+    <br/>
+    <br/>
+    <input type="submit" class="btn" value="Submit"/>
+}

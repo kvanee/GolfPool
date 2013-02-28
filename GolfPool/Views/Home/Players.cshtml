@@ -1,0 +1,30 @@
+﻿@model IEnumerable<IGrouping<string, GolfPool.Models.Player>>
+
+@{
+    ViewBag.Title = "Player Rankings";
+}
+
+<h2>Player Rankings</h2>
+
+<table class="table">
+    
+    @foreach (var group in Model)
+    {
+        <tr>
+            <td colspan="3"><h3>@group.Key</h3></td>
+        </tr>
+        foreach (var player in group)
+        {
+            <tr>
+                <td>
+                    @player.FullName
+                </td>
+                <td>
+                    @player.Rank
+                </td>
+                <td>@Html.ActionLink("edit",MVC.Admin.EditPlayer(player.PlayerID))</td>
+            </tr>
+        }
+    }
+
+</table>
