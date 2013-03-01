@@ -57,14 +57,16 @@ namespace GolfPool.Controllers
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         public class ActionNamesClass
         {
-            public readonly string Index = "Index";
+            public readonly string Standings = "Standings";
+            public readonly string SimulateUpdate = "SimulateUpdate";
             public readonly string Players = "Players";
         }
 
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         public class ActionNameConstants
         {
-            public const string Index = "Index";
+            public const string Standings = "Standings";
+            public const string SimulateUpdate = "SimulateUpdate";
             public const string Players = "Players";
         }
 
@@ -79,11 +81,11 @@ namespace GolfPool.Controllers
             public _ViewNamesClass ViewNames { get { return s_ViewNames; } }
             public class _ViewNamesClass
             {
-                public readonly string Index = "Index";
                 public readonly string Players = "Players";
+                public readonly string Standings = "Standings";
             }
-            public readonly string Index = "~/Views/Home/Index.cshtml";
             public readonly string Players = "~/Views/Home/Players.cshtml";
+            public readonly string Standings = "~/Views/Home/Standings.cshtml";
         }
     }
 
@@ -92,12 +94,21 @@ namespace GolfPool.Controllers
     {
         public T4MVC_HomeController() : base(Dummy.Instance) { }
 
-        partial void IndexOverride(T4MVC_System_Web_Mvc_ActionResult callInfo);
+        partial void StandingsOverride(T4MVC_System_Web_Mvc_ActionResult callInfo);
 
-        public override System.Web.Mvc.ActionResult Index()
+        public override System.Web.Mvc.ActionResult Standings()
         {
-            var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.Index);
-            IndexOverride(callInfo);
+            var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.Standings);
+            StandingsOverride(callInfo);
+            return callInfo;
+        }
+
+        partial void SimulateUpdateOverride(T4MVC_System_Web_Mvc_ActionResult callInfo);
+
+        public override System.Web.Mvc.ActionResult SimulateUpdate()
+        {
+            var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.SimulateUpdate);
+            SimulateUpdateOverride(callInfo);
             return callInfo;
         }
 

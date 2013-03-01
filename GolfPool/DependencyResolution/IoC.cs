@@ -29,7 +29,7 @@ namespace GolfPool.DependencyResolution {
                                         scan.WithDefaultConventions();
                                     });
                             x.For<IRepository>().Use<Repository>();
-                            x.For<GolfPoolEntities>().HttpContextScoped().Use<GolfPoolEntities>();
+                            x.For<GolfPoolEntities>().HybridHttpOrThreadLocalScoped().Use<GolfPoolEntities>();
                         });
             return ObjectFactory.Container;
         }

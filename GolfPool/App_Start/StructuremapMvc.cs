@@ -19,6 +19,7 @@ using System.Web.Http;
 using System.Web.Mvc;
 using StructureMap;
 using GolfPool.DependencyResolution;
+using Microsoft.AspNet.SignalR;
 
 [assembly: WebActivator.PreApplicationStartMethod(typeof(GolfPool.App_Start.StructuremapMvc), "Start")]
 

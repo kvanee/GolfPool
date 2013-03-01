@@ -66,7 +66,7 @@ namespace GolfPool.Controllers
         {
             repository.Insert(team);
             repository.Save();
-            return RedirectToAction(MVC.Home.Index());
+            return RedirectToAction(MVC.Home.Standings());
         }
     }
 

@@ -1,0 +1,90 @@
+﻿@model IEnumerable<GolfPool.Models.Team>
+
+@{
+    ViewBag.Title = "Standings";
+}
+
+@section scripts
+{
+    <script type="text/javascript" src="~/Scripts/knockout-2.2.1.js"></script>
+    <script type="text/javascript" src="~/Scripts/jquery.signalR-1.0.0.js"></script>
+    <script type="text/javascript" src="~/signalr/hubs"></script>
+    <script type="text/javascript">
+        $(function () {
+
+            function playerVM(playerID, score) {
+                var self = this;
+                self.PlayerID = playerID;
+                self.Score = ko.observable(score);
+            }
+
+            function teamVM(id, teamName) {
+                var self = this;
+                self.TeamID = id;
+                self.TeamName = ko.observable(teamName);
+                self.Players = ko.observableArray([]);
+            };
+            
+            function teamListVM() {
+                var self = this;
+                self.hub = $.connection.leaderboardHub;
+                self.teams = ko.observableArray([]);
+
+                self.init = function () {
+                    this.hub.server.getTeamList();
+                };
+
+                self.hub.client.UpdateTeamList = function (allTeams) {
+                    var teamList = ko.utils.arrayMap(allTeams, function(team) {
+                        return new teamVM(team.TeamID, team.TeamName);
+                    });
+                    self.teams(teamList);
+                };
+                
+                self.hub.client.teamUpdated = function (updatedTeam) {
+                    var team = ko.utils.arrayFirst(self.teams(), function (value) { return value.TeamID == updatedTeam.TeamID; });
+                    team.TeamName(updatedTeam.TeamName);
+                };
+
+            };
+            var vm = new teamListVM();
+            ko.applyBindings(vm);
+            $.connection.hub.start(function () { vm.init(); });
+                        
+        });
+    </script>
+
+} 
+
+
+<h2>Standings</h2>
+
+<table class="table">
+    <tr>
+        <th>Team Name</th>
+        <th>1</th>
+        <th>2</th>
+        <th>3</th>
+        <th>4</th>
+        <th>5</th>
+        <th>6</th>
+        <th>7</th>
+        <th>8</th>
+        <th>9</th>
+        <th>10</th>
+        <th>Overall</th>
+        <th></th>
+    </tr>
+    <tbody data-bind="foreach: teams">
+     
+        <tr >
+            <td><h5 data-bind="text: TeamName"></h5></td>
+            <!-- ko foreach: Players -->
+            <td data-bind="text: Score"></td>
+            <!-- /ko -->
+            <td><a href="#" data-bind="click: changeName">edit</a></td>
+        </tr>
+        
+    </tbody>
+
+</table>

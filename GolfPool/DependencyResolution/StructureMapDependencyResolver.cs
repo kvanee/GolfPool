@@ -18,6 +18,8 @@
 using System.Web.Http.Dependencies;
 using StructureMap;
 
+
+
 namespace GolfPool.DependencyResolution
 {
     /// <summary>
