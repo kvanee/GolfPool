@@ -240,10 +240,6 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="App_Data\golfpool.mdf" />
-    <Content Include="App_Data\golfpool_log.ldf">
-      <DependentUpon>golfpool.mdf</DependentUpon>
-    </Content>
     <Content Include="Content\bootstrap-responsive.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\images\Masters-Logo.jpg" />
@@ -312,7 +308,9 @@
     <Content Include="Views\Admin\EditPlayer.cshtml" />
     <Content Include="Views\Team\Index.cshtml" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="App_Data\" />
+  </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
   </ItemGroup>
