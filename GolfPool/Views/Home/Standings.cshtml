@@ -10,47 +10,63 @@
     <script type="text/javascript" src="~/Scripts/jquery.signalR-1.0.0.js"></script>
     <script type="text/javascript" src="~/signalr/hubs"></script>
     <script type="text/javascript">
-        $(function () {
+        $(function() {
 
-            function playerVM(playerID, score) {
+            function golferVM(id, score) {
                 var self = this;
-                self.PlayerID = playerID;
+                self.GolferID = id;
                 self.Score = ko.observable(score);
             }
 
-            function teamVM(id, teamName) {
+            function teamVM(id, teamName, context) {
                 var self = this;
+                self.hub = context.hub;
                 self.TeamID = id;
-                self.TeamName = ko.observable(teamName);
-                self.Players = ko.observableArray([]);
-            };
-            
+                self.TeamName = teamName;
+                self.Golfers = ko.observableArray([]);
+                $.get('@Url.Action(MVC.Home.TeamGolfers())/' + id, function(golfers) {
+                    //var golfers = JSON.parse(data);
+                    self.Golfers(ko.utils.arrayMap(golfers, function(golfer) {
+                        return new golferVM(golfer.GolferID, golfer.Score);
+                    }));
+                });
+
+                self.hub.on("golferUpdated", function(updatedGolfer) {
+                    var golfer = ko.utils.arrayFirst(self.Golfers(), function(value) { return value.GolferID == updatedGolfer.GolferID; });
+                    if (golfer != null)
+                        golfer.Score(updatedGolfer.Score);
+                });
+
+            }
+
+            ;
+
             function teamListVM() {
                 var self = this;
                 self.hub = $.connection.leaderboardHub;
                 self.teams = ko.observableArray([]);
 
-                self.init = function () {
-                    this.hub.server.getTeamList();
+                self.init = function() {
+                    self.hub.server.getTeamList();
                 };
 
-                self.hub.client.UpdateTeamList = function (allTeams) {
+                self.hub.client.InitTeamList = function(allTeams) {
                     var teamList = ko.utils.arrayMap(allTeams, function(team) {
-                        return new teamVM(team.TeamID, team.TeamName);
+                        return new teamVM(team.TeamID, team.TeamName, self);
                     });
                     self.teams(teamList);
                 };
-                
-                self.hub.client.teamUpdated = function (updatedTeam) {
-                    var team = ko.utils.arrayFirst(self.teams(), function (value) { return value.TeamID == updatedTeam.TeamID; });
-                    team.TeamName(updatedTeam.TeamName);
-                };
+            }
 
-            };
+            ;
             var vm = new teamListVM();
             ko.applyBindings(vm);
-            $.connection.hub.start(function () { vm.init(); });
-                        
+            $.connection.hub.logging = true;
+            $.connection.hub.start(function() { vm.init(); });
+
+            $("#refresh").click(function() {
+                $.post('@Url.Action(MVC.Home.SimulateUpdate())');
+            });
         });
     </script>
 
@@ -70,8 +86,6 @@
         <th>6</th>
         <th>7</th>
         <th>8</th>
-        <th>9</th>
-        <th>10</th>
         <th>Overall</th>
         <th></th>
     </tr>
@@ -79,12 +93,15 @@
      
         <tr >
             <td><h5 data-bind="text: TeamName"></h5></td>
-            <!-- ko foreach: Players -->
+            <!-- ko foreach: Golfers -->
             <td data-bind="text: Score"></td>
             <!-- /ko -->
-            <td><a href="#" data-bind="click: changeName">edit</a></td>
+            <td></td>
+            <td><a href="#">edit</a></td>
         </tr>
         
     </tbody>
 
 </table>
+
+<input type="button" id="refresh" value="Refresh"/>

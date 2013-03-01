@@ -41,6 +41,12 @@ namespace GolfPool.Controllers
             return RedirectToRoutePermanent(callInfo.RouteValueDictionary);
         }
 
+        [NonAction]
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public virtual System.Web.Mvc.JsonResult TeamGolfers()
+        {
+            return new T4MVC_System_Web_Mvc_JsonResult(Area, Name, ActionNames.TeamGolfers);
+        }
 
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         public HomeController Actions { get { return MVC.Home; } }
@@ -60,6 +66,7 @@ namespace GolfPool.Controllers
             public readonly string Standings = "Standings";
             public readonly string SimulateUpdate = "SimulateUpdate";
             public readonly string Players = "Players";
+            public readonly string TeamGolfers = "TeamGolfers";
         }
 
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
@@ -68,9 +75,18 @@ namespace GolfPool.Controllers
             public const string Standings = "Standings";
             public const string SimulateUpdate = "SimulateUpdate";
             public const string Players = "Players";
+            public const string TeamGolfers = "TeamGolfers";
         }
 
 
+        static readonly ActionParamsClass_TeamGolfers s_params_TeamGolfers = new ActionParamsClass_TeamGolfers();
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public ActionParamsClass_TeamGolfers TeamGolfersParams { get { return s_params_TeamGolfers; } }
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public class ActionParamsClass_TeamGolfers
+        {
+            public readonly string id = "id";
+        }
         static readonly ViewsClass s_views = new ViewsClass();
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         public ViewsClass Views { get { return s_views; } }
@@ -118,6 +134,16 @@ namespace GolfPool.Controllers
         {
             var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.Players);
             PlayersOverride(callInfo);
+            return callInfo;
+        }
+
+        partial void TeamGolfersOverride(T4MVC_System_Web_Mvc_JsonResult callInfo, int id);
+
+        public override System.Web.Mvc.JsonResult TeamGolfers(int id)
+        {
+            var callInfo = new T4MVC_System_Web_Mvc_JsonResult(Area, Name, ActionNames.TeamGolfers);
+            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "id", id);
+            TeamGolfersOverride(callInfo, id);
             return callInfo;
         }
 

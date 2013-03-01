@@ -96,7 +96,7 @@ namespace GolfPool.Controllers
         public class ActionParamsClass_EditPlayer
         {
             public readonly string id = "id";
-            public readonly string player = "player";
+            public readonly string golfer = "golfer";
         }
         static readonly ActionParamsClass_EditTeam s_params_EditTeam = new ActionParamsClass_EditTeam();
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
@@ -175,13 +175,13 @@ namespace GolfPool.Controllers
             return callInfo;
         }
 
-        partial void EditPlayerOverride(T4MVC_System_Web_Mvc_ActionResult callInfo, GolfPool.Models.Player player);
+        partial void EditPlayerOverride(T4MVC_System_Web_Mvc_ActionResult callInfo, GolfPool.Models.Golfer golfer);
 
-        public override System.Web.Mvc.ActionResult EditPlayer(GolfPool.Models.Player player)
+        public override System.Web.Mvc.ActionResult EditPlayer(GolfPool.Models.Golfer golfer)
         {
             var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.EditPlayer);
-            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "player", player);
-            EditPlayerOverride(callInfo, player);
+            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "golfer", golfer);
+            EditPlayerOverride(callInfo, golfer);
             return callInfo;
         }
 

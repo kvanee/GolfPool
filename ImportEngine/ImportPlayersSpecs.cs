@@ -18,7 +18,7 @@ namespace ImportEngine
         {
             GolfPoolEntities.RecreateAndSeedDB();
             var repo = new Repository(new GolfPoolEntities());
-            repo.Insert(new PlayerGroup());
+            repo.Insert(new GolferGroup());
             repo.Save();
 
         }

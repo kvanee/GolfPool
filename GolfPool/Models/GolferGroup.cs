@@ -5,7 +5,7 @@ using System.Web;
 
 namespace GolfPool.Models
 {
-    public class PlayerGroup
+    public class GolferGroup
     {
         public static readonly int Group1ID = 2;
         public static readonly int Group2ID = 3;
@@ -18,14 +18,14 @@ namespace GolfPool.Models
         public static readonly int Group9ID = 10;
         public static readonly int Group10ID = 11;
 
-        public PlayerGroup(string name, int rangeStart, int rangeEnd)
+        public GolferGroup(string name, int rangeStart, int rangeEnd)
         {
             this.Name = name;
             this.RangeStart = rangeStart;
             this.RangeEnd = rangeEnd;
         }
 
-        public PlayerGroup()
+        public GolferGroup()
         {
         }
 
@@ -35,7 +35,7 @@ namespace GolfPool.Models
 
         public int RangeEnd { get; set; }
 
-        public int PlayerGroupID { get; set; }
+        public int GolferGroupID { get; set; }
 
         
     }

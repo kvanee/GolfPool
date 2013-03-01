@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using System.Web.Mvc;
 using GolfPool.DB;
 using GolfPool.Hubs;
@@ -25,19 +26,37 @@ namespace GolfPool.Controllers
         public virtual ActionResult SimulateUpdate()
         {
             var context = GlobalHost.ConnectionManager.GetHubContext<LeaderboardHub>();
-            var team = repository.All<Team>().First();
-            team.TeamName = "UPDATE!!";
-            context.Clients.All.teamUpdated(team);
-            return RedirectToAction(MVC.Home.Standings());
+            context.Clients.All.golferUpdated(new { GolferID = 36, Score = 20 });
+            return Json(true);
         }
 
         public virtual ActionResult Players()
         {
             var players = repository
-                .All<Player>(x => x.PlayerGroup).OrderBy(x => x.Rank)
+                .All<Golfer>(x => x.GolferGroup).OrderBy(x => x.Rank)
                 .ToList()
-                .GroupBy(x => x.PlayerGroup.Name);
+                .GroupBy(x => x.GolferGroup.Name);
             return View(players);
+        }
+
+        public virtual JsonResult TeamGolfers(int id)
+        {
+            var team = repository.All<Team>(
+                x => x.Group1Golfer,
+                x => x.Group2Golfer,
+                x => x.Group3Golfer,
+                x => x.Group4Golfer,
+                x => x.Group5Golfer,
+                x => x.Group6Golfer,
+                x => x.Group7Golfer,
+                x => x.Group8Golfer).Single(x => x.TeamID == id);
+            var random = new Random(DateTime.Now.Millisecond);
+
+            foreach (var golfer in team.Golfers)
+            {
+                golfer.Score = random.Next(-10, 10);
+            }
+            return Json(team.Golfers, JsonRequestBehavior.AllowGet);
         }
     }
 }

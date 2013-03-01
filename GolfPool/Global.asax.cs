@@ -17,7 +17,7 @@ namespace GolfPool
     {
         protected void Application_Start()
         {
-            GolfPoolEntities.RecreateAndSeedDB();
+            //GolfPoolEntities.RecreateAndSeedDB();
 
             GlobalHost.DependencyResolver = new StructureMapSignalRDependencyResolver(ObjectFactory.Container);
             

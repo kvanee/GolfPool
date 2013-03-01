@@ -14,44 +14,56 @@ namespace GolfPool.Models
         [DisplayName("Your Name")]
         public string OwnerName { get; set; }
 
+        public bool Paid { get; set; }
+
         [DisplayName("Group 1")]
-        public int Group1PlayerID { get; set; }
-        public Player Group1Player { get; set; }
+        public int Group1GolferID { get; set; }
+        public virtual Golfer Group1Golfer { get; set; }
 
         [DisplayName("Group 2")]
-        public int Group2PlayerID { get; set; }
-        public Player Group2Player { get; set; }
+        public int Group2GolferID { get; set; }
+        public virtual Golfer Group2Golfer { get; set; }
 
         [DisplayName("Group 3")]
-        public int Group3PlayerID { get; set; }
-        public Player Group3Player { get; set; }
+        public int Group3GolferID { get; set; }
+        public virtual Golfer Group3Golfer { get; set; }
 
         [DisplayName("Group 4")]
-        public int Group4PlayerID { get; set; }
-        public Player Group4Player { get; set; }
+        public int Group4GolferID { get; set; }
+        public virtual Golfer Group4Golfer { get; set; }
 
         [DisplayName("Group 5")]
-        public int Group5PlayerID { get; set; }
-        public Player Group5Player { get; set; }
+        public int Group5GolferID { get; set; }
+        public virtual Golfer Group5Golfer { get; set; }
 
         [DisplayName("Group 6")]
-        public int Group6PlayerID { get; set; }
-        public Player Group6Player { get; set; }
+        public int Group6GolferID { get; set; }
+        public virtual Golfer Group6Golfer { get; set; }
 
         [DisplayName("Group 7")]
-        public int Group7PlayerID { get; set; }
-        public Player Group7Player { get; set; }
+        public int Group7GolferID { get; set; }
+        public virtual Golfer Group7Golfer { get; set; }
 
         [DisplayName("Group 8")]
-        public int Group8PlayerID { get; set; }
-        public Player Group8Player { get; set; }
+        public int Group8GolferID { get; set; }
+        public virtual Golfer Group8Golfer { get; set; }
 
-        [DisplayName("Group 9")]
-        public int Group9PlayerID { get; set; }
-        public Player Group9Player { get; set; }
-
-        [DisplayName("Group 10")]
-        public int Group10PlayerID { get; set; }
-        public Player Group10Player { get; set; }
+        public Golfer[] Golfers
+        {
+            get
+            {
+                return new[]
+                           {
+                               Group1Golfer,
+                               Group2Golfer, 
+                               Group3Golfer, 
+                               Group4Golfer,
+                               Group5Golfer,
+                               Group6Golfer,
+                               Group7Golfer,
+                               Group8Golfer,
+                           };
+            }
+        }
     }
 }

@@ -1,4 +1,4 @@
-﻿@model IEnumerable<IGrouping<string, GolfPool.Models.Player>>
+﻿@model IEnumerable<IGrouping<string, GolfPool.Models.Golfer>>
 
 @{
     ViewBag.Title = "Player Rankings";
@@ -22,7 +22,7 @@
                 <td>
                     @player.Rank
                 </td>
-                <td>@Html.ActionLink("edit",MVC.Admin.EditPlayer(player.PlayerID))</td>
+                <td>@Html.ActionLink("edit",MVC.Admin.EditPlayer(player.GolferID))</td>
             </tr>
         }
     }

@@ -21,42 +21,42 @@ namespace GolfPool.Controllers
         public virtual ActionResult Index()
         {
             var teamVM = new TeamVM();
-            var players = repository.All<Player>().ToList();
+            var players = repository.All<Golfer>().ToList();
             teamVM.Group1PlayerOptions = players
-                          .Where(x => x.PlayerGroupID == PlayerGroup.Group1ID)
-                          .CreateSelectList(x => x.PlayerID, x => x.FullName);
+                          .Where(x => x.GolferGroupID == GolferGroup.Group1ID)
+                          .CreateSelectList(x => x.GolferID, x => x.FullName);
 
             teamVM.Group2PlayerOptions = players
-                          .Where(x => x.PlayerGroupID == PlayerGroup.Group2ID)
-                          .CreateSelectList(x => x.PlayerID, x => x.FullName);
+                          .Where(x => x.GolferGroupID == GolferGroup.Group2ID)
+                          .CreateSelectList(x => x.GolferID, x => x.FullName);
 
             teamVM.Group3PlayerOptions = players
-                          .Where(x => x.PlayerGroupID == PlayerGroup.Group3ID)
-                          .CreateSelectList(x => x.PlayerID, x => x.FullName);
+                          .Where(x => x.GolferGroupID == GolferGroup.Group3ID)
+                          .CreateSelectList(x => x.GolferID, x => x.FullName);
 
             teamVM.Group4PlayerOptions = players
-                          .Where(x => x.PlayerGroupID == PlayerGroup.Group4ID)
-                          .CreateSelectList(x => x.PlayerID, x => x.FullName);
+                          .Where(x => x.GolferGroupID == GolferGroup.Group4ID)
+                          .CreateSelectList(x => x.GolferID, x => x.FullName);
 
             teamVM.Group5PlayerOptions = players
-                          .Where(x => x.PlayerGroupID == PlayerGroup.Group5ID)
-                          .CreateSelectList(x => x.PlayerID, x => x.FullName);
+                          .Where(x => x.GolferGroupID == GolferGroup.Group5ID)
+                          .CreateSelectList(x => x.GolferID, x => x.FullName);
 
             teamVM.Group6PlayerOptions = players
-                          .Where(x => x.PlayerGroupID == PlayerGroup.Group6ID)
-                          .CreateSelectList(x => x.PlayerID, x => x.FullName);
+                          .Where(x => x.GolferGroupID == GolferGroup.Group6ID)
+                          .CreateSelectList(x => x.GolferID, x => x.FullName);
             teamVM.Group7PlayerOptions = players
-                          .Where(x => x.PlayerGroupID == PlayerGroup.Group7ID)
-                          .CreateSelectList(x => x.PlayerID, x => x.FullName);
+                          .Where(x => x.GolferGroupID == GolferGroup.Group7ID)
+                          .CreateSelectList(x => x.GolferID, x => x.FullName);
             teamVM.Group8PlayerOptions = players
-                          .Where(x => x.PlayerGroupID == PlayerGroup.Group8ID)
-                          .CreateSelectList(x => x.PlayerID, x => x.FullName);
+                          .Where(x => x.GolferGroupID == GolferGroup.Group8ID)
+                          .CreateSelectList(x => x.GolferID, x => x.FullName);
             teamVM.Group9PlayerOptions = players
-                          .Where(x => x.PlayerGroupID == PlayerGroup.Group9ID)
-                          .CreateSelectList(x => x.PlayerID, x => x.FullName);
+                          .Where(x => x.GolferGroupID == GolferGroup.Group9ID)
+                          .CreateSelectList(x => x.GolferID, x => x.FullName);
             teamVM.Group10PlayerOptions = players
-                          .Where(x => x.PlayerGroupID == PlayerGroup.Group10ID)
-                          .CreateSelectList(x => x.PlayerID, x => x.FullName);
+                          .Where(x => x.GolferGroupID == GolferGroup.Group10ID)
+                          .CreateSelectList(x => x.GolferID, x => x.FullName);
 
             return View(teamVM);
         }

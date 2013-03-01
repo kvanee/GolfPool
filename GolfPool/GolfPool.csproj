@@ -220,10 +220,11 @@
       <DependentUpon>T4MVC.tt</DependentUpon>
     </Compile>
     <Compile Include="Hubs\LeaderboardHub.cs" />
+    <Compile Include="Mapping\TeamMap.cs" />
     <Compile Include="Models\AccountModels.cs" />
     <Compile Include="Models\PlayerAdministration.cs" />
-    <Compile Include="Models\Player.cs" />
-    <Compile Include="Models\PlayerGroup.cs" />
+    <Compile Include="Models\Golfer.cs" />
+    <Compile Include="Models\GolferGroup.cs" />
     <Compile Include="Models\Team.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SharedController.generated.cs">

@@ -1,4 +1,4 @@
-﻿@model GolfPool.Models.Player
+﻿@model GolfPool.Models.Golfer
 
 @{
     ViewBag.Title = "Player";
@@ -8,7 +8,7 @@
 
 @using (Html.BeginForm())
 {
-    @Html.HiddenFor(x => x.PlayerID)
+    @Html.HiddenFor(x => x.GolferID)
     @Html.HiddenFor(x => x.FullName)
     @Html.DisplayFor(x => x.FullName)
     <br/>
