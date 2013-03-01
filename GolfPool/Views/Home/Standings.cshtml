@@ -12,10 +12,19 @@
     <script type="text/javascript">
         $(function() {
 
-            function golferVM(id, score) {
+            function golferVM(id, score, fullname) {
                 var self = this;
                 self.GolferID = id;
                 self.Score = ko.observable(score);
+                self.Fullname = ko.observable(fullname);
+                self.Position = "T2";
+                self.showPlayerInfo = function (data, event) {
+                    var playerDiv = $('<div></div>').append('<div><h4>'+self.Fullname+'</h4> </div>');
+                    $(event.srcElement).popover({ placement: 'bottom', html: true, content: playerDiv.html() }).popover('show');
+                };
+                self.hidePlayerInfo = function(data, event) {
+                    $(event.srcElement).popover('hide');
+                };
             }
 
             function teamVM(id, teamName, context) {
@@ -27,7 +36,7 @@
                 $.get('@Url.Action(MVC.Home.TeamGolfers())/' + id, function(golfers) {
                     //var golfers = JSON.parse(data);
                     self.Golfers(ko.utils.arrayMap(golfers, function(golfer) {
-                        return new golferVM(golfer.GolferID, golfer.Score);
+                        return new golferVM(golfer.GolferID, golfer.Score, golfer.FullName);
                     }));
                 });
 
@@ -63,10 +72,6 @@
             ko.applyBindings(vm);
             $.connection.hub.logging = true;
             $.connection.hub.start(function() { vm.init(); });
-
-            $("#refresh").click(function() {
-                $.post('@Url.Action(MVC.Home.SimulateUpdate())');
-            });
         });
     </script>
 
@@ -74,34 +79,34 @@
 
 
 <h2>Standings</h2>
+<div id="standings-container" style="width: 100%; height: 100%;">
 
-<table class="table">
-    <tr>
-        <th>Team Name</th>
-        <th>1</th>
-        <th>2</th>
-        <th>3</th>
-        <th>4</th>
-        <th>5</th>
-        <th>6</th>
-        <th>7</th>
-        <th>8</th>
-        <th>Overall</th>
-        <th></th>
-    </tr>
-    <tbody data-bind="foreach: teams">
-     
-        <tr >
-            <td><h5 data-bind="text: TeamName"></h5></td>
-            <!-- ko foreach: Golfers -->
-            <td data-bind="text: Score"></td>
-            <!-- /ko -->
-            <td></td>
-            <td><a href="#">edit</a></td>
+    <table class="table">
+        <tr>
+            <th>Team Name</th>
+            <th><div class="table-cell">1</div></th>
+            <th><div class="table-cell">2</div></th>
+            <th><div class="table-cell">3</div></th>
+            <th><div class="table-cell">4</div></th>
+            <th><div class="table-cell">5</div></th>
+            <th><div class="table-cell">6</div></th>
+            <th><div class="table-cell">7</div></th>
+            <th><div class="table-cell">8</div></th>
+            <th><div class="table-cell">Overall</div></th>
+            <th></th>
         </tr>
+        <tbody data-bind="foreach: teams">
+     
+            <tr>
+                <td><h5 data-bind="text: TeamName"></h5></td>
+                <!-- ko foreach: Golfers -->
+                <td><div class="table-cell" data-bind="text: Score, event: {mouseover: showPlayerInfo, mouseout: hidePlayerInfo}"></div></td>
+                <!-- /ko -->
+                <td></td>
+                <td><a href="#">edit</a></td>
+            </tr>
         
-    </tbody>
+        </tbody>
 
-</table>
-
-<input type="button" id="refresh" value="Refresh"/>
+    </table>
+</div>
