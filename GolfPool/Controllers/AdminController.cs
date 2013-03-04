@@ -2,7 +2,9 @@
 using System.Linq;
 using System.Web.Mvc;
 using GolfPool.DB;
+using GolfPool.Hubs;
 using GolfPool.Models;
+using Microsoft.AspNet.SignalR;
 
 namespace GolfPool.Controllers
 {
@@ -79,6 +81,10 @@ namespace GolfPool.Controllers
             golfer.GolferGroupID = group.GolferGroupID;
             repository.Update(golfer);
             repository.Save();
+
+            var context = GlobalHost.ConnectionManager.GetHubContext<LeaderboardHub>();
+            context.Clients.All.golferUpdated(golfer);
+
             return RedirectToAction(MVC.Home.Players());
         }
 

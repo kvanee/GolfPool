@@ -2,9 +2,7 @@
 using System.Linq;
 using System.Web.Mvc;
 using GolfPool.DB;
-using GolfPool.Hubs;
 using GolfPool.Models;
-using Microsoft.AspNet.SignalR;
 
 namespace GolfPool.Controllers
 {
@@ -21,13 +19,6 @@ namespace GolfPool.Controllers
         {
             var teams = repository.All<Team>();
             return View(teams);
-        }
-
-        public virtual ActionResult SimulateUpdate()
-        {
-            var context = GlobalHost.ConnectionManager.GetHubContext<LeaderboardHub>();
-            context.Clients.All.golferUpdated(new { GolferID = 36, Score = 20 });
-            return Json(true);
         }
 
         public virtual ActionResult Players()

@@ -68,8 +68,112 @@ nav {
     display: none;
 }
 
+.popover {
+    max-width: 100%;
+}
+.cell {
+    margin-top: 8px;
+}
+
+.header-row {
+    margin-bottom: 8px;
+}
+.table-row {
+    border-top: 1px rgba(128,128,128,0.3) solid;
+    margin-bottom: 8px;
+}
+
+@-moz-keyframes showgreen {
+  0% {
+    background: RGBA(85, 204, 68, 0);
+  }
+  50% {
+    background: RGBA(85, 204, 68, 0.3);
+  }
+  100% {
+    background: RGBA(85, 204, 68, 0);
+  }
+}
+
+@-webkit-keyframes showgreen {
+  0% {
+    background: RGBA(85, 204, 68, 0);
+  }
+  50% {
+    background: RGBA(85, 204, 68, 0.3);
+  }
+  100% {
+    background: RGBA(85, 204, 68, 0);
+  }
+}
+
+@keyframes showgreen {
+  0% {
+    background: RGBA(85, 204, 68, 0);
+  }
+  50% {
+    background: RGBA(85, 204, 68, 0.3);
+  }
+  100% {
+    background: RGBA(85, 204, 68, 0);
+  }
+}
+
+.move-up {
+    -moz-animation-name: showgreen;
+    -o-animation-name: showgreen;
+    -webkit-animation-name: showgreen;
+    animation-name: showgreen;
+        -moz-animation-duration: 2s;
+    -o-animation-duration: 2s;
+    -webkit-animation-duration: 2s;
+    animation-duration: 2s;
+}
 
 
-.table-cell {
-    text-align: center;
+@-moz-keyframes showred {
+  0% {
+    background: RGBA(255, 0, 0, 0);
+  }
+  50% {
+    background: RGBA(255, 0, 0, 0.3);
+  }
+  100% {
+    background: RGBA(255, 0, 0, 0);
+  }
+}
+@-webkit-keyframes showred {
+  0% {
+    background: RGBA(255, 0, 0, 0);
+  }
+  50% {
+    background: RGBA(255, 0, 0, 0.3);
+  }
+  100% {
+    background: RGBA(255, 0, 0, 0);
+  }
+}
+@keyframes showred {
+  0% {
+    background: RGBA(255, 0, 0, 0);
+  }
+  50% {
+    background: RGBA(255, 0, 0, 0.3);
+  }
+  100% {
+    background: RGBA(255, 0, 0, 0);
+  }
+}
+
+
+
+.move-down {
+    -moz-animation-name: showred;
+    -o-animation-name: showred;
+    -webkit-animation-name: showred;
+    animation-name: showred;
+    -moz-animation-duration: 2s;
+    -o-animation-duration: 2s;
+    -webkit-animation-duration: 2s;
+    animation-duration: 2s;
 }

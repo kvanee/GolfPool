@@ -64,7 +64,6 @@ namespace GolfPool.Controllers
         public class ActionNamesClass
         {
             public readonly string Standings = "Standings";
-            public readonly string SimulateUpdate = "SimulateUpdate";
             public readonly string Players = "Players";
             public readonly string TeamGolfers = "TeamGolfers";
         }
@@ -73,7 +72,6 @@ namespace GolfPool.Controllers
         public class ActionNameConstants
         {
             public const string Standings = "Standings";
-            public const string SimulateUpdate = "SimulateUpdate";
             public const string Players = "Players";
             public const string TeamGolfers = "TeamGolfers";
         }
@@ -116,15 +114,6 @@ namespace GolfPool.Controllers
         {
             var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.Standings);
             StandingsOverride(callInfo);
-            return callInfo;
-        }
-
-        partial void SimulateUpdateOverride(T4MVC_System_Web_Mvc_ActionResult callInfo);
-
-        public override System.Web.Mvc.ActionResult SimulateUpdate()
-        {
-            var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.SimulateUpdate);
-            SimulateUpdateOverride(callInfo);
             return callInfo;
         }
 

@@ -32,7 +32,7 @@ namespace GolfPool.Hubs
                 x => x.Group6Golfer,
                 x => x.Group7Golfer,
                 x => x.Group8Golfer).Single(x => x.TeamID == id);
-            var random = new Random(DateTime.Now.Millisecond + id);
+            var random = new Random(DateTime.Now.Millisecond * id);
 
             foreach (var golfer in team.Golfers)
             {
