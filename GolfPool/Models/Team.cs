@@ -65,5 +65,11 @@ namespace GolfPool.Models
                            };
             }
         }
+
+        public int Overall()
+        {
+            return Group1Golfer.Score + Group2Golfer.Score + Group3Golfer.Score + Group4Golfer.Score +
+                   Group5Golfer.Score + Group6Golfer.Score + Group7Golfer.Score + Group8Golfer.Score;
+        }
     }
 }

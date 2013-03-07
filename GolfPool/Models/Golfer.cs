@@ -22,5 +22,7 @@
 
         public int GolferGroupID { get; set; }
         public GolferGroup GolferGroup { get; set; }
+
+        public string Position { get; set; }
     }
 }

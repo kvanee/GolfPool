@@ -31,6 +31,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <ExcludeApp_Data>false</ExcludeApp_Data>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -194,7 +195,9 @@
     </Compile>
     <Compile Include="App_Start\AuthConfig.cs" />
     <Compile Include="App_Start\BundleConfig.cs" />
+    <Compile Include="App_Start\JobHost.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
+    <Compile Include="App_Start\GolferScoreMonitor.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\StructuremapMvc.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
@@ -221,6 +224,7 @@
     </Compile>
     <Compile Include="Hubs\LeaderboardHub.cs" />
     <Compile Include="Mapping\TeamMap.cs" />
+    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountModels.cs" />
     <Compile Include="Models\PlayerAdministration.cs" />
     <Compile Include="Models\Golfer.cs" />
@@ -307,6 +311,7 @@
     <Content Include="Views\Home\Players.cshtml" />
     <Content Include="Views\Admin\EditPlayer.cshtml" />
     <Content Include="Views\Team\Index.cshtml" />
+    <Content Include="Views\Admin\UpdateLeaderboardSource.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -333,7 +338,7 @@
         <WebProjectProperties>
           <UseIIS>True</UseIIS>
           <AutoAssignPort>True</AutoAssignPort>
-          <DevelopmentServerPort>0</DevelopmentServerPort>
+          <DevelopmentServerPort>18643</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
           <IISUrl>http://localhost:14768/</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>

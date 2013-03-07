@@ -7,22 +7,41 @@
 <h2>Player Rankings</h2>
 
 <table class="table">
-    
+    <tr>
+        <th>
+                ID
+            </th>
+        <th>
+            Name
+        </th>
+        <th>
+            Score
+        </th>
+        <th>
+            Rank
+        </th>
+    </tr>
     @foreach (var group in Model)
     {
+        
         <tr>
-            <td colspan="3"><h3>@group.Key</h3></td>
+            <td colspan="4"><h3>@group.Key</h3></td>
         </tr>
         foreach (var player in group)
         {
             <tr>
                 <td>
+                    @player.GolferID
+                </td>
+                <td>
                     @player.FullName
+                </td>
+                <td>
+                    @player.Score
                 </td>
                 <td>
                     @player.Rank
                 </td>
-                <td>@Html.ActionLink("edit",MVC.Admin.EditPlayer(player.GolferID))</td>
             </tr>
         }
     }

@@ -1,5 +1,4 @@
-﻿using System;
-using System.Linq;
+﻿using System.Linq;
 using GolfPool.DB;
 using GolfPool.Models;
 using Microsoft.AspNet.SignalR;
@@ -17,7 +16,7 @@ namespace GolfPool.Hubs
 
         public void GetTeamList()
         {
-            var teams = repository.All<Team>().ToArray();
+            var teams = repository.All<Team>().ToArray().OrderBy(x => x.Overall()).ToArray();
             Clients.Caller.InitTeamList(teams);
         }
 
@@ -32,14 +31,13 @@ namespace GolfPool.Hubs
                 x => x.Group6Golfer,
                 x => x.Group7Golfer,
                 x => x.Group8Golfer).Single(x => x.TeamID == id);
-            var random = new Random(DateTime.Now.Millisecond * id);
-
-            foreach (var golfer in team.Golfers)
-            {
-                golfer.Score = random.Next(-10, 10);
-            }
-
             Clients.Caller.InitGolfers(team.Golfers);
+        }
+
+        public static void UpdateScore(Golfer golfer)
+        {
+            var context = GlobalHost.ConnectionManager.GetHubContext<LeaderboardHub>();
+            context.Clients.All.golferUpdated(golfer);
         }
     }
 }

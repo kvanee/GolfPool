@@ -73,6 +73,7 @@ namespace GolfPool.Controllers
             public readonly string ImportPlayers = "ImportPlayers";
             public readonly string ImportWorldRankings = "ImportWorldRankings";
             public readonly string CreateGroups = "CreateGroups";
+            public readonly string UpdateLeaderboardSource = "UpdateLeaderboardSource";
             public readonly string EditPlayer = "EditPlayer";
             public readonly string EditTeam = "EditTeam";
         }
@@ -84,6 +85,7 @@ namespace GolfPool.Controllers
             public const string ImportPlayers = "ImportPlayers";
             public const string ImportWorldRankings = "ImportWorldRankings";
             public const string CreateGroups = "CreateGroups";
+            public const string UpdateLeaderboardSource = "UpdateLeaderboardSource";
             public const string EditPlayer = "EditPlayer";
             public const string EditTeam = "EditTeam";
         }
@@ -118,9 +120,11 @@ namespace GolfPool.Controllers
             {
                 public readonly string EditPlayer = "EditPlayer";
                 public readonly string Index = "Index";
+                public readonly string UpdateLeaderboardSource = "UpdateLeaderboardSource";
             }
             public readonly string EditPlayer = "~/Views/Admin/EditPlayer.cshtml";
             public readonly string Index = "~/Views/Admin/Index.cshtml";
+            public readonly string UpdateLeaderboardSource = "~/Views/Admin/UpdateLeaderboardSource.cshtml";
         }
     }
 
@@ -162,6 +166,15 @@ namespace GolfPool.Controllers
         {
             var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.CreateGroups);
             CreateGroupsOverride(callInfo);
+            return callInfo;
+        }
+
+        partial void UpdateLeaderboardSourceOverride(T4MVC_System_Web_Mvc_ActionResult callInfo);
+
+        public override System.Web.Mvc.ActionResult UpdateLeaderboardSource()
+        {
+            var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.UpdateLeaderboardSource);
+            UpdateLeaderboardSourceOverride(callInfo);
             return callInfo;
         }
 

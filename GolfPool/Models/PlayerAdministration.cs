@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Text.RegularExpressions;
+using GolfPool.DB;
+using GolfPool.Hubs;
 
 namespace GolfPool.Models
 {
@@ -10,6 +12,11 @@ namespace GolfPool.Models
     {
         private string NameWorldRankRegex = @"<a target=""_parent"" href=""/players/bio.sps.*Rank=(?<rank>[0-9]*).*>(?<name>.*)</a>";
         //http://www.masters.com/en_US/players/invitees_2013.html
+
+        public static string sourceURL = "http://ca.sports.yahoo.com/golf/pga/leaderboard";
+        public static string scoreRegex = "<tr(?s).*?<td .*?>(?<position>.*?)</td>(?s).*?<a .*?>(?<name>.*?)</a>(?s).*?<td .*?>(?<c1>.*?)</td>(?s).*?<td .*?>(?<c2>.*?)</td>(?s).*?<td .*?>(?<c3>.*?)</td>(?s).*?<td .*?>(?<c4>.*?)</td>(?s).*?<td .*?>(?<c5>.*?)</td>(?s).*?<td .*?>(?<c6>.*?)</td>(?s).*?<td .*?>(?<score>.*?)</td>(?s).*?</tr>";
+
+
         public IEnumerable<Golfer> GetPlayers()
         {
             var webClient = new WebClient();
@@ -61,6 +68,78 @@ namespace GolfPool.Models
             {
                 Console.WriteLine("Couldnt find all names");
             }
+        }
+
+        public static void UpdateScores()
+        {
+            try
+            {
+                var repository = new Repository(new GolfPoolEntities());
+                var golfers = repository.All<Golfer>().ToDictionary(x => x.FullName, x => x);
+
+                var webClient = new WebClient();
+                webClient.BaseAddress = sourceURL;
+                var page = webClient.DownloadString("");
+                var regex = new Regex(scoreRegex);
+                var matches = regex.Matches(page);
+                foreach (Match match in matches)
+                {
+                    var name = match.Groups["name"].Value.Trim().Trim('*');
+                    if (golfers.ContainsKey(name))
+                    {
+                        var dirty = false;
+                        var golfer = golfers[name];
+                        int score;
+                        if (int.TryParse(match.Groups["score"].Value.Trim(), out score))
+                        {
+                            dirty = updateScore(golfer, score, dirty);
+                        }
+                        else if (match.Groups["score"].Value.Trim() == "E")
+                        {
+                            score = 0;
+                            dirty = updateScore(golfer, score, dirty);
+                        }
+                        if (!string.IsNullOrWhiteSpace(match.Groups["position"].Value))
+                        {
+                            dirty = updatePosition(golfer, match.Groups["position"].Value.Trim(), dirty);
+                        }
+
+                        if (dirty)
+                            sendUpdate(golfer, repository);
+                    }
+                
+                }
+                repository.Save();
+            }
+            catch (Exception e)
+            {
+            }
+        }
+
+        private static bool updatePosition(Golfer golfer, string position, bool dirty)
+        {
+            if (golfer.Position != position)
+            {
+                dirty = true;
+                golfer.Position = position;
+            }
+            return dirty;
+        }
+
+        private static void sendUpdate(Golfer golfer, IRepository repository)
+        {
+            repository.Update(golfer);
+            LeaderboardHub.UpdateScore(golfer);
+        }
+
+        private static bool updateScore(Golfer golfer, int score, bool dirty)
+        {
+            if (golfer.Score != score)
+            {
+                dirty = true;
+                golfer.Score = score;
+            }
+            return dirty;
         }
     }
 }

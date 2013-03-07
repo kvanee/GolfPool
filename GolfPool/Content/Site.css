@@ -87,11 +87,8 @@ nav {
   0% {
     background: RGBA(85, 204, 68, 0);
   }
-  50% {
-    background: RGBA(85, 204, 68, 0.3);
-  }
   100% {
-    background: RGBA(85, 204, 68, 0);
+    background: RGBA(85, 204, 68, 0.3);
   }
 }
 
@@ -99,11 +96,8 @@ nav {
   0% {
     background: RGBA(85, 204, 68, 0);
   }
-  50% {
-    background: RGBA(85, 204, 68, 0.3);
-  }
   100% {
-    background: RGBA(85, 204, 68, 0);
+    background: RGBA(85, 204, 68, 0.3);
   }
 }
 
@@ -111,11 +105,8 @@ nav {
   0% {
     background: RGBA(85, 204, 68, 0);
   }
-  50% {
-    background: RGBA(85, 204, 68, 0.3);
-  }
   100% {
-    background: RGBA(85, 204, 68, 0);
+    background: RGBA(85, 204, 68, 0.3);
   }
 }
 
@@ -124,10 +115,10 @@ nav {
     -o-animation-name: showgreen;
     -webkit-animation-name: showgreen;
     animation-name: showgreen;
-        -moz-animation-duration: 2s;
-    -o-animation-duration: 2s;
-    -webkit-animation-duration: 2s;
-    animation-duration: 2s;
+        -moz-animation-duration: 5s;
+    -o-animation-duration: 5s;
+    -webkit-animation-duration: 5s;
+    animation-duration: 5s;
 }
 
 
@@ -135,33 +126,24 @@ nav {
   0% {
     background: RGBA(255, 0, 0, 0);
   }
-  50% {
-    background: RGBA(255, 0, 0, 0.3);
-  }
   100% {
-    background: RGBA(255, 0, 0, 0);
+    background: RGBA(255, 0, 0, 0.3);
   }
 }
 @-webkit-keyframes showred {
   0% {
     background: RGBA(255, 0, 0, 0);
   }
-  50% {
-    background: RGBA(255, 0, 0, 0.3);
-  }
   100% {
-    background: RGBA(255, 0, 0, 0);
+    background: RGBA(255, 0, 0, 0.3);
   }
 }
 @keyframes showred {
   0% {
     background: RGBA(255, 0, 0, 0);
   }
-  50% {
-    background: RGBA(255, 0, 0, 0.3);
-  }
   100% {
-    background: RGBA(255, 0, 0, 0);
+    background: RGBA(255, 0, 0, 0.3);
   }
 }
 
@@ -172,8 +154,8 @@ nav {
     -o-animation-name: showred;
     -webkit-animation-name: showred;
     animation-name: showred;
-    -moz-animation-duration: 2s;
-    -o-animation-duration: 2s;
-    -webkit-animation-duration: 2s;
-    animation-duration: 2s;
+    -moz-animation-duration: 5s;
+    -o-animation-duration: 5s;
+    -webkit-animation-duration: 5s;
+    animation-duration: 5s;
 }

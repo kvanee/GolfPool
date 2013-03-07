@@ -1,0 +1,43 @@
+﻿@model GolfPool.Controllers.LeaderboardSourceVM
+
+@{
+    ViewBag.Title = "Leaderboard Source";
+}
+
+@section scripts
+{
+    <script type="text/javascript">
+        $(function(){
+            $("#SourceUrl, #ScoreRegex").change(function(){
+    
+//                $.ajax({
+//                    url : Url.Action(MVC.Admin.TestRegex),
+//                    success : function(result){
+//                        var patt = new RegExp($("#ScoreRegex").val(), "g");
+//                        
+//                    }
+//                });
+
+            });
+        });
+    </script>
+}
+
+    <h2>Leaderboard Source</h2>
+
+
+@using (Html.BeginForm())
+{
+    <br/>
+    <br/>
+    @Html.LabelFor(x => x.SourceUrl)
+    @Html.TextBoxFor(x => x.SourceUrl, new{@class = "input-xxlarge"})
+
+    <br/>
+    <br/>
+
+    @Html.LabelFor(x => x.ScoreRegex)
+    @Html.TextAreaFor(x => x.ScoreRegex,10,20,new{@class = "input-xxlarge"})
+    <br />
+    <input type="submit" class="btn" value="Save"/>
+}

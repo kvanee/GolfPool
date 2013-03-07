@@ -28,7 +28,7 @@
                     }
                 }
                 if (swapped)
-                    setTimeout(sortTable, 2100);
+                    setTimeout(sortTable, 5100);
             }
 
             function swapRows(firstRow, secondRow) {
@@ -42,18 +42,16 @@
                 secondRow.animate({ top: 0 }, 800);
             }
 
-            function golferVM(id, score, fullname) {
+            function golferVM(id, score, fullname, position) {
                 var self = this;
                 self.GolferID = id;
                 self.Score = ko.observable(score);
                 self.Fullname = ko.observable(fullname);
-                self.Position = ko.observable("T2");
+                self.Position = ko.observable(position);
                 self.showPlayerInfo = function(data, event) {
                     var playerDiv = $('#player-template').clone();
                     playerDiv.find('.Fullname').text(self.Fullname());
                     playerDiv.find('.Position').text(self.Position());
-                    var editHtml = playerDiv.find('.edit').html();
-                    playerDiv.find('.edit').html(editHtml.replace('0', self.GolferID));
                     $(event.srcElement).popover({ placement: 'bottom', html: true, content: playerDiv.html() }).popover('show');
                 };
                 self.hidePlayerInfo = function(data, event) {
@@ -79,7 +77,7 @@
 
                 $.get('@Url.Action(MVC.Home.TeamGolfers())/' + id, function(golfers) {
                     self.Golfers(ko.utils.arrayMap(golfers, function(golfer) {
-                        return new golferVM(golfer.GolferID, golfer.Score, golfer.FullName);
+                        return new golferVM(golfer.GolferID, golfer.Score, golfer.FullName, golfer.Position);
                     }));
                 });
 
@@ -87,6 +85,7 @@
                     var golfer = ko.utils.arrayFirst(self.Golfers(), function(value) { return value.GolferID == updatedGolfer.GolferID; });
                     if (golfer != null) {
                         golfer.Score(updatedGolfer.Score);
+                        golfer.Position(updatedGolfer.Position);
                         sortTable();
                     }
                 });
@@ -147,7 +146,6 @@
         <div class="span1 text-center cell" data-bind="text: Score, event: {mouseover: showPlayerInfo, mouseout: hidePlayerInfo}"></div>
         <!-- /ko -->
         <div class="span1  text-center cell overall" data-bind="text: Overall"></div>
-        <div class="span1 cell"><a href="#">edit</a></div>
     </div>
     <!-- /ko -->
 </div>
@@ -166,11 +164,6 @@
             <div class="span4 Position"></div>
             <div class="span2"></div>
             <div class="span6"></div>
-        </div>
-        <div class="row-fluid">
-            <div class="span12">
-                <div class="pull-right edit">@Html.ActionLink("edit",MVC.Admin.EditPlayer(0))</div>
-            </div>
         </div>
     </div>
 </div>

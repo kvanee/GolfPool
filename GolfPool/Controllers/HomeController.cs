@@ -41,12 +41,6 @@ namespace GolfPool.Controllers
                 x => x.Group6Golfer,
                 x => x.Group7Golfer,
                 x => x.Group8Golfer).Single(x => x.TeamID == id);
-            var random = new Random(DateTime.Now.Millisecond);
-
-            foreach (var golfer in team.Golfers)
-            {
-                golfer.Score = random.Next(-10, 10);
-            }
             return Json(team.Golfers, JsonRequestBehavior.AllowGet);
         }
     }

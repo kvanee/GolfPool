@@ -42,9 +42,11 @@ namespace GolfPool.Controllers
         {
             var players = repository.All<Golfer>().ToList();
             players = playerAdministration.GetWorldRankings(players).ToList();
-
+            var groups = repository.All<GolferGroup>().ToList();
             foreach (var player in players)
             {
+                var group = groups.Single(x => player.Rank >= x.RangeStart && player.Rank <= x.RangeEnd);
+                player.GolferGroupID = group.GolferGroupID;
                 repository.Update(player);
             }
             repository.Save();
@@ -64,6 +66,12 @@ namespace GolfPool.Controllers
             }
             repository.Save();
             return RedirectToAction(MVC.Home.Players());
+        }
+
+        public virtual ActionResult UpdateLeaderboardSource()
+        {
+            var leaderboardSourceVM = new LeaderboardSourceVM(PlayerAdministration.sourceURL, PlayerAdministration.scoreRegex);
+            return View(leaderboardSourceVM);
         }
 
         public virtual ActionResult EditPlayer(int id)
@@ -91,6 +99,18 @@ namespace GolfPool.Controllers
         public virtual ActionResult EditTeam(int id)
         {
             throw new Exception("Not implemented.");
+        }
+    }
+
+    public class LeaderboardSourceVM
+    {
+        public string SourceUrl { get; set; }
+        public string ScoreRegex { get; set; }
+
+        public LeaderboardSourceVM(string sourceUrl, string scoreRegex)
+        {
+            SourceUrl = sourceUrl;
+            ScoreRegex = scoreRegex;
         }
     }
 }
