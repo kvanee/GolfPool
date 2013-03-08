@@ -28,25 +28,18 @@ namespace GolfPool.Models
 
         public string Position { get; set; }
 
-        [NotMapped]
         public string Day1 { get; set; }
 
-        [NotMapped]
         public string Day2 { get; set; }
         
-        [NotMapped]
         public string Day3 { get; set; }
 
-        [NotMapped]
         public string Day4 { get; set; }
 
-        [NotMapped]
         public string Today { get; set; }
 
-        [NotMapped]
         public string Thru { get; set; }
-
-        [NotMapped]
+        
         public string LastUpdate { get; set; }
 
         public bool UpdateScore(int score)

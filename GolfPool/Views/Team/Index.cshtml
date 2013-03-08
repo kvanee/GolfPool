@@ -4,13 +4,29 @@
     ViewBag.Title = "New Team";
 }
 
+@section scripts
+{
+        <script type="text/javascript">
+        $(function () {
+            $(window).keydown(function (event) {
+                if (event.keyCode == 13) {
+                    event.preventDefault();
+                    return false;
+                }
+            });
+        });
+    </script>
+}
+
 @using (Html.BeginForm())
 {
     @Html.LabelFor(model => model.OwnerName)
     @Html.EditorFor(x => x.OwnerName)
+    @Html.ValidationMessageFor(x => x.OwnerName)
     <br/>
     @Html.LabelFor(model => model.TeamName)
     @Html.EditorFor(x => x.TeamName)
+    @Html.ValidationMessageFor(x => x.TeamName)
     <br/>
     <br/>
     @Html.LabelFor(model => model.Group1GolferID)

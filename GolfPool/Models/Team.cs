@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
 
 namespace GolfPool.Models
 {
@@ -9,9 +10,13 @@ namespace GolfPool.Models
 
 
         [DisplayName("Team Name")]
+        [Required]
+        [StringLength(20, MinimumLength = 3)]
         public string TeamName { get; set; }
         
         [DisplayName("Your Name")]
+        [Required]
+        [StringLength(20, MinimumLength = 3)]
         public string OwnerName { get; set; }
 
         public bool Paid { get; set; }
