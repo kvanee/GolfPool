@@ -63,6 +63,10 @@
                     playerDiv.find('.Today').text(self.Today());
                     playerDiv.find('.Thru').text(self.Thru());
                     playerDiv.find('.LastUpdate').text(self.LastUpdate());
+                    playerDiv.find('.Day1').text(self.Day1());
+                    playerDiv.find('.Day2').text(self.Day2());
+                    playerDiv.find('.Day3').text(self.Day3());
+                    playerDiv.find('.Day4').text(self.Day4());
                     $(event.srcElement).popover({ placement: 'bottom', html: true, content: playerDiv.html() }).popover('show');
                 };
                 self.hidePlayerInfo = function(data, event) {
