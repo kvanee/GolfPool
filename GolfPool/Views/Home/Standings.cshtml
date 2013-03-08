@@ -70,7 +70,7 @@
                     $(event.srcElement).popover({ placement: 'bottom', html: true, content: playerDiv.html() }).popover('show');
                 };
                 self.hidePlayerInfo = function(data, event) {
-                    $(event.srcElement).popover('hide');
+                    $(event.srcElement).popover('destroy');
                 };
             }
 
@@ -201,10 +201,10 @@
             <th >D4</th>
         </tr>
         <tr >
-            <td class=" Day1"></td>
-            <td class=" Day2"></td>
-            <td class=" Day3"></td>
-            <td class=" Day4"></td>
+            <td class="Day1"></td>
+            <td class="Day2"></td>
+            <td class="Day3"></td>
+            <td class="Day4"></td>
         </tr>
     </table>
 </div>

@@ -72,13 +72,13 @@ namespace GolfPool.Models
                     Day1 = value;
                     break;
                 case 2:
-                    Day1 = value;
+                    Day2 = value;
                     break;
                 case 3:
-                    Day1 = value;
+                    Day3 = value;
                     break;
                 case 4:
-                    Day1 = value;
+                    Day4 = value;
                     break;
             }
         }
