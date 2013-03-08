@@ -5,6 +5,7 @@ using System.Net;
 using System.Text.RegularExpressions;
 using GolfPool.DB;
 using GolfPool.Hubs;
+using NodaTime;
 
 namespace GolfPool.Models
 {
@@ -116,7 +117,8 @@ namespace GolfPool.Models
                         }
                         if (dirty)
                         {
-                            golfer.LastUpdate = DateTime.Now.ToShortTimeString();
+                            var now = TimeZoneInfo.ConvertTime(DateTime.Now,TimeZoneInfo.FindSystemTimeZoneById("Mountain Standard Time"));
+                            golfer.LastUpdate = now.ToShortTimeString();
                             sendUpdate(golfer, repository);
                         }
                     }

@@ -88,7 +88,9 @@
 
                 $.get('@Url.Action(MVC.Home.TeamGolfers())/' + id, function(golfers) {
                     self.Golfers(ko.utils.arrayMap(golfers, function(golfer) {
-                        return new golferVM(golfer.GolferID, golfer.Score, golfer.FullName, golfer.Position, golfer.Today, golfer.Thru, golfer.LastUpdate, golfer.Day1);
+                        return new golferVM(golfer.GolferID, golfer.Score, golfer.FullName, golfer.Position,
+                            golfer.Today, golfer.Thru, golfer.LastUpdate, golfer.Day1,
+                         golfer.Day2,golfer.Day3,golfer.Day4);
                     }));
                 });
 
