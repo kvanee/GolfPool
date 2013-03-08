@@ -74,6 +74,7 @@
                 };
             }
 
+            var sortTableTimeout;
             function teamVM(id, teamName, context) {
                 var self = this;
                 self.hub = context.hub;
@@ -110,7 +111,9 @@
                         golfer.Day2(updatedGolfer.Day2);
                         golfer.Day3(updatedGolfer.Day3);
                         golfer.Day4(updatedGolfer.Day4);
-                        sortTable();
+                        if(sortTableTimeout != null)
+                            sortTableTimeout.clear();
+                        sortTableTimeout = setTimeout(sortTable, 500);
                     }
                 });
             }

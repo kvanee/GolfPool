@@ -105,9 +105,9 @@ namespace GolfPool.Controllers
             return callInfo;
         }
 
-        partial void IndexOverride(T4MVC_System_Web_Mvc_ActionResult callInfo, GolfPool.Models.Team team);
+        partial void IndexOverride(T4MVC_System_Web_Mvc_ActionResult callInfo, GolfPool.Controllers.TeamVM team);
 
-        public override System.Web.Mvc.ActionResult Index(GolfPool.Models.Team team)
+        public override System.Web.Mvc.ActionResult Index(GolfPool.Controllers.TeamVM team)
         {
             var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.Index);
             ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "team", team);

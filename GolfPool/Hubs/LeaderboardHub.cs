@@ -39,5 +39,13 @@ namespace GolfPool.Hubs
             var context = GlobalHost.ConnectionManager.GetHubContext<LeaderboardHub>();
             context.Clients.All.golferUpdated(golfer);
         }
+
+        public static void UpdateTeamList()
+        {
+            var repo = new Repository(new GolfPoolEntities());
+            var context = GlobalHost.ConnectionManager.GetHubContext<LeaderboardHub>();
+            var teams = repo.All<Team>().ToArray().OrderBy(x => x.Overall()).ToArray();
+            context.Clients.All.InitTeamList(teams);
+        }
     }
 }
