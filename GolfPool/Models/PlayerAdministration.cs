@@ -14,7 +14,7 @@ namespace GolfPool.Models
         //http://www.masters.com/en_US/players/invitees_2013.html
 
         public static string sourceURL = "http://ca.sports.yahoo.com/golf/pga/leaderboard";
-        public static string scoreRegex = "<tr(?s).*?<td .*?>(?<position>.*?)</td>(?s).*?<a .*?>(?<name>.*?)</a>(?s).*?<td .*?>(?<c1>.*?)</td>(?s).*?<td .*?>(?<c2>.*?)</td>(?s).*?<td .*?>(?<c3>.*?)</td>(?s).*?<td .*?>(?<c4>.*?)</td>(?s).*?<td .*?>(?<c5>.*?)</td>(?s).*?<td .*?>(?<c6>.*?)</td>(?s).*?<td .*?>(?<score>.*?)</td>(?s).*?</tr>";
+        public static string scoreRegex = "<tr(?s).*?<td .*?>(?<position>.*?)</td>(?s).*?<a .*?>(?<name>.*?)</a>(?s).*?<td .*?>(?<day1>.*?)</td>(?s).*?<td .*?>(?<day2>.*?)</td>(?s).*?<td .*?>(?<c3>.*?)</td>(?s).*?<td .*?>(?<c4>.*?)</td>(?s).*?<td .*?>(?<today>.*?)</td>(?s).*?<td .*?>(?<thru>.*?)</td>(?s).*?<td .*?>(?<score>.*?)</td>(?s).*?</tr>";
 
 
         public IEnumerable<Golfer> GetPlayers()
@@ -92,20 +92,33 @@ namespace GolfPool.Models
                         int score;
                         if (int.TryParse(match.Groups["score"].Value.Trim(), out score))
                         {
-                            dirty = updateScore(golfer, score, dirty);
+                            dirty |= golfer.UpdateScore(score);
                         }
                         else if (match.Groups["score"].Value.Trim() == "E")
                         {
-                            score = 0;
-                            dirty = updateScore(golfer, score, dirty);
+                            dirty |= golfer.UpdateScore(0);
                         }
                         if (!string.IsNullOrWhiteSpace(match.Groups["position"].Value))
                         {
-                            dirty = updatePosition(golfer, match.Groups["position"].Value.Trim(), dirty);
+                            dirty |= golfer.UpdatePosition(match.Groups["position"].Value);
                         }
-
+                        if (!string.IsNullOrWhiteSpace(match.Groups["today"].Value))
+                        {
+                            dirty |= golfer.UpdateToday(match.Groups["today"].Value);
+                        }
+                        if (!string.IsNullOrWhiteSpace(match.Groups["thru"].Value))
+                        {
+                            dirty |= golfer.UpdateThru(match.Groups["thru"].Value);
+                        }
+                        for (int i = 1; i <= 4; i++)
+                        {
+                            golfer.UpdateDay(i, match.Groups["day"+i].Value);
+                        }
                         if (dirty)
+                        {
+                            golfer.LastUpdate = DateTime.Now.ToShortTimeString();
                             sendUpdate(golfer, repository);
+                        }
                     }
                 
                 }
@@ -116,30 +129,10 @@ namespace GolfPool.Models
             }
         }
 
-        private static bool updatePosition(Golfer golfer, string position, bool dirty)
-        {
-            if (golfer.Position != position)
-            {
-                dirty = true;
-                golfer.Position = position;
-            }
-            return dirty;
-        }
-
         private static void sendUpdate(Golfer golfer, IRepository repository)
         {
             repository.Update(golfer);
             LeaderboardHub.UpdateScore(golfer);
-        }
-
-        private static bool updateScore(Golfer golfer, int score, bool dirty)
-        {
-            if (golfer.Score != score)
-            {
-                dirty = true;
-                golfer.Score = score;
-            }
-            return dirty;
         }
     }
 }

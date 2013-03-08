@@ -42,16 +42,27 @@
                 secondRow.animate({ top: 0 }, 800);
             }
 
-            function golferVM(id, score, fullname, position) {
+            function golferVM(id, score, fullname, position, today, thru, lastUpdate, day1, day2, day3, day4) {
                 var self = this;
                 self.GolferID = id;
                 self.Score = ko.observable(score);
                 self.Fullname = ko.observable(fullname);
                 self.Position = ko.observable(position);
+                self.Today = ko.observable(today);
+                self.Thru = ko.observable(thru);
+                self.LastUpdate = ko.observable(lastUpdate);
+                self.Day1 = ko.observable(day1);
+                self.Day2 = ko.observable(day2);
+                self.Day3 = ko.observable(day3);
+                self.Day4 = ko.observable(day4);
+                
                 self.showPlayerInfo = function(data, event) {
                     var playerDiv = $('#player-template').clone();
                     playerDiv.find('.Fullname').text(self.Fullname());
                     playerDiv.find('.Position').text(self.Position());
+                    playerDiv.find('.Today').text(self.Today());
+                    playerDiv.find('.Thru').text(self.Thru());
+                    playerDiv.find('.LastUpdate').text(self.LastUpdate());
                     $(event.srcElement).popover({ placement: 'bottom', html: true, content: playerDiv.html() }).popover('show');
                 };
                 self.hidePlayerInfo = function(data, event) {
@@ -77,7 +88,7 @@
 
                 $.get('@Url.Action(MVC.Home.TeamGolfers())/' + id, function(golfers) {
                     self.Golfers(ko.utils.arrayMap(golfers, function(golfer) {
-                        return new golferVM(golfer.GolferID, golfer.Score, golfer.FullName, golfer.Position);
+                        return new golferVM(golfer.GolferID, golfer.Score, golfer.FullName, golfer.Position, golfer.Today, golfer.Thru, golfer.LastUpdate, golfer.Day1);
                     }));
                 });
 
@@ -86,6 +97,13 @@
                     if (golfer != null) {
                         golfer.Score(updatedGolfer.Score);
                         golfer.Position(updatedGolfer.Position);
+                        golfer.Today(updatedGolfer.Today);
+                        golfer.Thru(updatedGolfer.Thru);
+                        golfer.LastUpdate(updatedGolfer.LastUpdate);
+                        golfer.Day1(updatedGolfer.Day1);
+                        golfer.Day1(updatedGolfer.Day2);
+                        golfer.Day1(updatedGolfer.Day3);
+                        golfer.Day1(updatedGolfer.Day4);
                         sortTable();
                     }
                 });
@@ -150,20 +168,37 @@
     <!-- /ko -->
 </div>
 
-<div id="player-template" style="display: none;">
-    <div class="container-fluid">
-        <div class="row-fluid">
-            <div class="span12"><h4 class="Fullname"></h4> </div>
-        </div>
-        <div class="row-fluid">
-            <div class="span4"><strong>Pos</strong></div>
-            <div class="span2"><strong></strong></div>
-            <div class="span6"></div>
-        </div>
-        <div class="row-fluid">
-            <div class="span4 Position"></div>
-            <div class="span2"></div>
-            <div class="span6"></div>
-        </div>
-    </div>
+   
+    <div id="player-template" style="display: none;">
+    <table>
+        <tr >
+            <td colspan="5"><h4 class="Fullname"></h4> </td>
+        </tr>
+        <tr >
+            <th >Pos</th>
+            <th >Today</th>
+            <th >Thru</th>
+            
+            <th >Udated</th>
+        </tr>
+        <tr >
+            <td class=" Position"></td>
+            <td class=" Today"></td>
+            <td class=" Thru"></td>
+            
+            <td class=" LastUpdate"></td>
+        </tr>
+        <tr >
+            <th >D1</th>
+            <th >D2</th>
+            <th >D3</th>
+            <th >D4</th>
+        </tr>
+        <tr >
+            <td class=" Day1"></td>
+            <td class=" Day2"></td>
+            <td class=" Day3"></td>
+            <td class=" Day4"></td>
+        </tr>
+    </table>
 </div>
