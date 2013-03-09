@@ -5,7 +5,6 @@ using System.Net;
 using System.Text.RegularExpressions;
 using GolfPool.DB;
 using GolfPool.Hubs;
-using NodaTime;
 
 namespace GolfPool.Models
 {
@@ -15,7 +14,7 @@ namespace GolfPool.Models
         //http://www.masters.com/en_US/players/invitees_2013.html
 
         public static string sourceURL = "http://ca.sports.yahoo.com/golf/pga/leaderboard";
-        public static string scoreRegex = "<tr(?s).*?<td .*?>(?<position>.*?)</td>(?s).*?<a .*?>(?<name>.*?)</a>(?s).*?<td .*?>(?<day1>.*?)</td>(?s).*?<td .*?>(?<day2>.*?)</td>(?s).*?<td .*?>(?<c3>.*?)</td>(?s).*?<td .*?>(?<c4>.*?)</td>(?s).*?<td .*?>(?<today>.*?)</td>(?s).*?<td .*?>(?<thru>.*?)</td>(?s).*?<td .*?>(?<score>.*?)</td>(?s).*?</tr>";
+        public static string scoreRegex = "<tr(?s).*?<td .*?>(?<position>.*?)</td>(?s).*?<a .*?>(?<name>.*?)</a>(?s).*?<td .*?>(?<day1>.*?)</td>(?s).*?<td .*?>(?<day2>.*?)</td>(?s).*?<td .*?>(?<day3>.*?)</td>(?s).*?<td .*?>(?<day4>.*?)</td>(?s).*?<td .*?>(?<today>.*?)</td>(?s).*?<td .*?>(?<thru>.*?)</td>(?s).*?<td .*?>(?<score>.*?)</td>(?s).*?</tr>";
 
 
         public IEnumerable<Golfer> GetPlayers()
@@ -81,6 +80,8 @@ namespace GolfPool.Models
                 var webClient = new WebClient();
                 webClient.BaseAddress = sourceURL;
                 var page = webClient.DownloadString("");
+                var startIndex = page.IndexOf("leaderboardtable");
+                page = page.Substring(startIndex, page.Length- startIndex);
                 var regex = new Regex(scoreRegex);
                 var matches = regex.Matches(page);
                 foreach (Match match in matches)
