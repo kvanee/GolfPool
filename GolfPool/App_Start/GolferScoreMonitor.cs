@@ -14,7 +14,7 @@ namespace GolfPool.App_Start
 
         public static void Start()
         {
-            _timer.Change(TimeSpan.Zero, TimeSpan.FromSeconds(10));
+            _timer.Change(TimeSpan.Zero, TimeSpan.FromSeconds(240));
         }
 
         private static void OnTimerElapsed(object sender)
