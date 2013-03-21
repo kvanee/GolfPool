@@ -91,6 +91,14 @@ namespace GolfPool.Controllers
         }
 
 
+        static readonly ActionParamsClass_UpdateLeaderboardSource s_params_UpdateLeaderboardSource = new ActionParamsClass_UpdateLeaderboardSource();
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public ActionParamsClass_UpdateLeaderboardSource UpdateLeaderboardSourceParams { get { return s_params_UpdateLeaderboardSource; } }
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public class ActionParamsClass_UpdateLeaderboardSource
+        {
+            public readonly string leaderboardSource = "leaderboardSource";
+        }
         static readonly ActionParamsClass_EditPlayer s_params_EditPlayer = new ActionParamsClass_EditPlayer();
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         public ActionParamsClass_EditPlayer EditPlayerParams { get { return s_params_EditPlayer; } }
@@ -175,6 +183,16 @@ namespace GolfPool.Controllers
         {
             var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.UpdateLeaderboardSource);
             UpdateLeaderboardSourceOverride(callInfo);
+            return callInfo;
+        }
+
+        partial void UpdateLeaderboardSourceOverride(T4MVC_System_Web_Mvc_ActionResult callInfo, GolfPool.Controllers.LeaderboardSourceVM leaderboardSource);
+
+        public override System.Web.Mvc.ActionResult UpdateLeaderboardSource(GolfPool.Controllers.LeaderboardSourceVM leaderboardSource)
+        {
+            var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.UpdateLeaderboardSource);
+            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "leaderboardSource", leaderboardSource);
+            UpdateLeaderboardSourceOverride(callInfo, leaderboardSource);
             return callInfo;
         }
 

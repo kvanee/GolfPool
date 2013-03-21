@@ -14,8 +14,11 @@ namespace GolfPool.Models
         //http://www.masters.com/en_US/players/invitees_2013.html
 
         public static string sourceURL = "http://ca.sports.yahoo.com/golf/pga/leaderboard";
-        public static string scoreRegex = "<tr(?s).*?<td .*?>(?<position>.*?)</td>(?s).*?<a .*?>(?<name>.*?)</a>(?s).*?<td .*?>(?<day1>.*?)</td>(?s).*?<td .*?>(?<day2>.*?)</td>(?s).*?<td .*?>(?<day3>.*?)</td>(?s).*?<td .*?>(?<day4>.*?)</td>(?s).*?<td .*?>(?<today>.*?)</td>(?s).*?<td .*?>(?<thru>.*?)</td>(?s).*?<td .*?>(?<score>.*?)</td>(?s).*?</tr>";
 
+        public static string headRegexStr = "<thead>(?s).*?</thead>";
+        public static string activeRegex = "<tr(?s).*?<td .*?>(?<position>.*?)</td>(?s).*?<a .*?>(?<name>.*?)</a>(?s).*?<td .*?>(?<day1>.*?)</td>(?s).*?<td .*?>(?<day2>.*?)</td>(?s).*?<td .*?>(?<day3>.*?)</td>(?s).*?<td .*?>(?<day4>.*?)</td>(?s).*?<td .*?>(?<today>.*?)</td>(?s).*?<td .*?>(?<thru>.*?)</td>(?s).*?<td .*?>(?<score>.*?)</td>(?s).*?</tr>";
+        public static string preRegex = "<tr(?s).*?<td(?s).*?<a .*?>(?<name>.*?)</a>(?s).*?<td .*?>(?<day1>.*?)</td>(?s).*?<td .*?>(?<day2>.*?)</td>(?s).*?<td .*?>(?<day3>.*?)</td>(?s).*?<td .*?>(?<day4>.*?)</td>(?s).*?<td .*?>(?<today>.*?)</td>(?s).*?<td .*?>(?<thru>.*?)</td>(?s).*?<td .*?>(?<score>.*?)</td>(?s).*?</tr>";
+        public static string postRegex = "<tr(?s).*?<td .*?>(?<position>.*?)</td>(?s).*?<a .*?>(?<name>.*?)</a>(?s).*?<td .*?>(?<day1>.*?)</td>(?s).*?<td .*?>(?<day2>.*?)</td>(?s).*?<td .*?>(?<day3>.*?)</td>(?s).*?<td .*?>(?<day4>.*?)</td>(?s).*?<td .*?>(?<today>.*?)</td>(?s).*?<td .*?>(?<score>.*?)</td>(?s).*?</tr>";
 
         public IEnumerable<Golfer> GetPlayers()
         {
@@ -70,66 +73,88 @@ namespace GolfPool.Models
             }
         }
 
-        public static void UpdateScores()
+        public static void UpdateScoresFromSource(bool force)
         {
             try
             {
                 var repository = new Repository(new GolfPoolEntities());
-                var golfers = repository.All<Golfer>().ToDictionary(x => x.FullName, x => x);
-
                 var webClient = new WebClient();
                 webClient.BaseAddress = sourceURL;
                 var page = webClient.DownloadString("");
                 var startIndex = page.IndexOf("leaderboardtable");
                 page = page.Substring(startIndex, page.Length- startIndex);
-                var regex = new Regex(scoreRegex);
-                var matches = regex.Matches(page);
-                foreach (Match match in matches)
-                {
-                    var name = match.Groups["name"].Value.Trim().Trim('*');
-                    if (golfers.ContainsKey(name))
-                    {
-                        var dirty = false;
-                        var golfer = golfers[name];
-                        int score;
-                        if (int.TryParse(match.Groups["score"].Value.Trim(), out score))
-                        {
-                            dirty |= golfer.UpdateScore(score);
-                        }
-                        else if (match.Groups["score"].Value.Trim() == "E")
-                        {
-                            dirty |= golfer.UpdateScore(0);
-                        }
-                        if (!string.IsNullOrWhiteSpace(match.Groups["position"].Value))
-                        {
-                            dirty |= golfer.UpdatePosition(match.Groups["position"].Value);
-                        }
-                        if (!string.IsNullOrWhiteSpace(match.Groups["today"].Value))
-                        {
-                            dirty |= golfer.UpdateToday(match.Groups["today"].Value);
-                        }
-                        if (!string.IsNullOrWhiteSpace(match.Groups["thru"].Value))
-                        {
-                            dirty |= golfer.UpdateThru(match.Groups["thru"].Value);
-                        }
-                        for (int i = 1; i <= 4; i++)
-                        {
-                            golfer.UpdateDay(i, match.Groups["day"+i].Value);
-                        }
-                        if (dirty)
-                        {
-                            var now = TimeZoneInfo.ConvertTime(DateTime.Now,TimeZoneInfo.FindSystemTimeZoneById("Mountain Standard Time"));
-                            golfer.LastUpdate = now.ToShortTimeString();
-                            sendUpdate(golfer, repository);
-                        }
-                    }
-                
-                }
+                UpdateGolfers(force, page, repository);
                 repository.Save();
             }
             catch (Exception e)
             {
             }
+        }
+
+        public static void UpdateGolfers(bool force, string page, IRepository repository)
+        {
+            
+            var golfers = repository.All<Golfer>().ToDictionary(x => x.FullName, x => x);
+            
+            
+            var regex = DetermineRegex(page);
+            var matches = regex.Matches(page);
+            foreach (Match match in matches)
+            {
+                var name = match.Groups["name"].Value.Trim().Trim('*');
+                if (golfers.ContainsKey(name))
+                {
+                    var dirty = false;
+                    var golfer = golfers[name];
+                    int score;
+                    if (int.TryParse(match.Groups["score"].Value.Trim(), out score))
+                    {
+                        dirty |= golfer.UpdateScore(score);
+                    }
+                    else if (match.Groups["score"].Value.Trim() == "E")
+                    {
+                        dirty |= golfer.UpdateScore(0);
+                    }
+                    if (!string.IsNullOrWhiteSpace(match.Groups["position"].Value))
+                    {
+                        dirty |= golfer.UpdatePosition(match.Groups["position"].Value);
+                    }
+                    if (!string.IsNullOrWhiteSpace(match.Groups["today"].Value))
+                    {
+                        dirty |= golfer.UpdateToday(match.Groups["today"].Value);
+                    }
+                    if (!string.IsNullOrWhiteSpace(match.Groups["thru"].Value))
+                    {
+                        dirty |= golfer.UpdateThru(match.Groups["thru"].Value);
+                    }
+                    for (int i = 1; i <= 4; i++)
+                    {
+                        golfer.UpdateDay(i, match.Groups["day" + i].Value);
+                    }
+                    if (dirty || force)
+                    {
+                        var now = TimeZoneInfo.ConvertTime(DateTime.Now,
+                                                           TimeZoneInfo.FindSystemTimeZoneById("Mountain Standard Time"));
+                        golfer.LastUpdate = now.ToShortTimeString();
+                        sendUpdate(golfer, repository);
+                    }
+                }
+            }
+        }
+
+        public static Regex DetermineRegex(string page)
+        {
+            var theadRegex = new Regex(headRegexStr);
+
+            var head = theadRegex.Match(page).Value;
+
+            if (head.Contains("earnings"))
+                return new Regex(postRegex);
+
+            if (head.Contains("position"))
+                return new Regex(activeRegex);
+
+            return new Regex(preRegex);
         }
 
         private static void sendUpdate(Golfer golfer, IRepository repository)

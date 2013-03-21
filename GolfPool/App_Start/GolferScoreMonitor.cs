@@ -19,7 +19,7 @@ namespace GolfPool.App_Start
 
         private static void OnTimerElapsed(object sender)
         {
-            _jobHost.DoWork(() => PlayerAdministration.UpdateScores());
+            _jobHost.DoWork(() => PlayerAdministration.UpdateScoresFromSource(false));
         }
     }
 }

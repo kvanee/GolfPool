@@ -70,8 +70,17 @@ namespace GolfPool.Controllers
 
         public virtual ActionResult UpdateLeaderboardSource()
         {
-            var leaderboardSourceVM = new LeaderboardSourceVM(PlayerAdministration.sourceURL, PlayerAdministration.scoreRegex);
+            var leaderboardSourceVM = new LeaderboardSourceVM(PlayerAdministration.sourceURL, PlayerAdministration.activeRegex);
             return View(leaderboardSourceVM);
+        }
+
+        [HttpPost]
+        public virtual ActionResult UpdateLeaderboardSource(LeaderboardSourceVM leaderboardSource)
+        {
+            PlayerAdministration.activeRegex = leaderboardSource.ScoreRegex;
+            PlayerAdministration.sourceURL = leaderboardSource.SourceUrl;
+            PlayerAdministration.UpdateScoresFromSource(true);
+            return RedirectToAction(MVC.Admin.Index());
         }
 
         public virtual ActionResult EditPlayer(int id)
