@@ -107,11 +107,12 @@ namespace GolfPool.Models
                     var dirty = false;
                     var golfer = golfers[name];
                     int score;
-                    if (int.TryParse(match.Groups["score"].Value.Trim(), out score))
+                    string scoreText = match.Groups["score"].Value.Trim();
+                    if (int.TryParse(scoreText, out score))
                     {
                         dirty |= golfer.UpdateScore(score);
                     }
-                    else if (match.Groups["score"].Value.Trim() == "E")
+                    else if (scoreText == "E" || scoreText == "-")
                     {
                         dirty |= golfer.UpdateScore(0);
                     }
