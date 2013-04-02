@@ -10,7 +10,7 @@ namespace GolfPool.Models
 {
     public class PlayerAdministration 
     {
-        private string NameWorldRankRegex = @"<a target=""_parent"" href=""/players/bio.sps.*Rank=(?<rank>[0-9]*).*>(?<name>.*)</a>";
+        private string NameWorldRankRegex = @"<a target=""_parent"" href=""/players/bio.sps.*Rank=(?<rank>[0-9]*)(?s).*?>(?<name>.*?)</a>";
         //http://www.masters.com/en_US/players/invitees_2013.html
 
         public static string sourceURL = "http://ca.sports.yahoo.com/golf/pga/leaderboard";
