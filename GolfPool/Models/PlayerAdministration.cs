@@ -136,7 +136,7 @@ namespace GolfPool.Models
                     {
                         var now = TimeZoneInfo.ConvertTime(DateTime.Now,
                                                            TimeZoneInfo.FindSystemTimeZoneById("Mountain Standard Time"));
-                        golfer.LastUpdate = now.ToShortTimeString();
+                        golfer.LastUpdate = now.ToShortTimeString() + " " + now.ToShortDateString();
                         sendUpdate(golfer, repository);
                     }
                 }

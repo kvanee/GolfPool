@@ -92,7 +92,6 @@ namespace GolfPool.Controllers
         [HttpPost]
         public virtual ActionResult EditPlayer(Golfer golfer)
         {
-
             var groups = repository.All<GolferGroup>().ToList();
             var group = groups.Single(x => golfer.Rank >= x.RangeStart && golfer.Rank <= x.RangeEnd);
             golfer.GolferGroupID = group.GolferGroupID;
