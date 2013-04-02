@@ -16,7 +16,7 @@ namespace GolfPool.Models
         public static string sourceURL = "http://ca.sports.yahoo.com/golf/pga/leaderboard";
 
         public static string headRegexStr = "<thead>(?s).*?</thead>";
-        public static string activeRegex = "<tr(?s).*?<td .*?>(?<position>.*?)</td>(?s).*?<a .*?>(?<name>.*?)</a>(?s).*?<td .*?>(?<day1>.*?)</td>(?s).*?<td .*?>(?<day2>.*?)</td>(?s).*?<td .*?>(?<day3>.*?)</td>(?s).*?<td .*?>(?<day4>.*?)</td>(?s).*?<td .*?>(?<today>.*?)</td>(?s).*?<td .*?>(?<thru>.*?)</td>(?s).*?<td .*?>(?<score>.*?)</td>(?s).*?</tr>";
+        public static string activeRegex = "<tr(?s).*?<td .*?>(?<position>.*?)</td>(?s).*?<a .*?>(?<name>.*?)</a>(?s).*?<td .*?>(?<day1>.*?)</td>(?s).*?<td .*?>(?<day2>.*?)</td>(?s).*?<td .*?>(?<day3>.*?)</td>(?s).*?<td .*?>(?<day4>.*?)</td>(?s).*?<td .*?>(?<today>.*?)</td>(?s).*?<td .*?>(?<thru>.*?)</td>(?s).*?<td .*?>(?<score>.*?)</td>(?s).*?<td .*?>(?<strokes>.*?)</td>(?s).*?</tr>";
         public static string preRegex = "<tr(?s).*?<td(?s).*?<a .*?>(?<name>.*?)</a>(?s).*?<td .*?>(?<day1>.*?)</td>(?s).*?<td .*?>(?<day2>.*?)</td>(?s).*?<td .*?>(?<day3>.*?)</td>(?s).*?<td .*?>(?<day4>.*?)</td>(?s).*?<td .*?>(?<today>.*?)</td>(?s).*?<td .*?>(?<thru>.*?)</td>(?s).*?<td .*?>(?<score>.*?)</td>(?s).*?</tr>";
         public static string postRegex = "<tr(?s).*?<td .*?>(?<position>.*?)</td>(?s).*?<a .*?>(?<name>.*?)</a>(?s).*?<td .*?>(?<day1>.*?)</td>(?s).*?<td .*?>(?<day2>.*?)</td>(?s).*?<td .*?>(?<day3>.*?)</td>(?s).*?<td .*?>(?<day4>.*?)</td>(?s).*?<td .*?>(?<today>.*?)</td>(?s).*?<td .*?>(?<score>.*?)</td>(?s).*?</tr>";
 
@@ -115,6 +115,16 @@ namespace GolfPool.Models
                     else if (scoreText == "E" || scoreText == "-")
                     {
                         dirty |= golfer.UpdateScore(0);
+                    }
+                    else if ((scoreText == "MC" || match.Groups["day3"].Value == "MC") && match.Groups["strokes"] != null)
+                    {
+                        int strokes;
+                        string strokesText = match.Groups["strokes"].Value.Trim();
+                        if (int.TryParse(strokesText, out strokes))
+                        {
+                            //160 = 72 + 8 * 2 (+8 for last two days)
+                            dirty |= golfer.UpdateScore(strokes + 160);
+                        }
                     }
                     if (!string.IsNullOrWhiteSpace(match.Groups["position"].Value))
                     {
