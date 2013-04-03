@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using GolfPool.DB;
 using GolfPool.Models;
 using Microsoft.AspNet.SignalR;
@@ -46,6 +47,12 @@ namespace GolfPool.Hubs
             var context = GlobalHost.ConnectionManager.GetHubContext<LeaderboardHub>();
             var teams = repo.All<Team>().ToArray().OrderBy(x => x.Overall()).ToArray();
             context.Clients.All.InitTeamList(teams);
+        }
+
+        public static void UpdateLastUpdateDisplay(DateTime now)
+        {
+            var context = GlobalHost.ConnectionManager.GetHubContext<LeaderboardHub>();
+            context.Clients.All.lastUpdated(now.ToShortTimeString() + " - " + now.ToShortDateString());
         }
     }
 }

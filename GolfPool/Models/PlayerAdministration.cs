@@ -77,21 +77,24 @@ namespace GolfPool.Models
         {
             try
             {
+                var now = TimeZoneInfo.ConvertTime(DateTime.Now,
+                                                           TimeZoneInfo.FindSystemTimeZoneById("Mountain Standard Time"));
                 var repository = new Repository(new GolfPoolEntities());
                 var webClient = new WebClient();
                 webClient.BaseAddress = sourceURL;
                 var page = webClient.DownloadString("");
                 var startIndex = page.IndexOf("leaderboardtable");
                 page = page.Substring(startIndex, page.Length- startIndex);
-                UpdateGolfers(force, page, repository);
+                UpdateGolfers(force, page, repository, now);
                 repository.Save();
+                LeaderboardHub.UpdateLastUpdateDisplay(now);
             }
             catch (Exception e)
             {
             }
         }
 
-        public static void UpdateGolfers(bool force, string page, IRepository repository)
+        public static void UpdateGolfers(bool force, string page, IRepository repository, DateTime now)
         {
             
             var golfers = repository.All<Golfer>().ToDictionary(x => x.FullName, x => x);
@@ -144,8 +147,6 @@ namespace GolfPool.Models
                     }
                     if (dirty || force)
                     {
-                        var now = TimeZoneInfo.ConvertTime(DateTime.Now,
-                                                           TimeZoneInfo.FindSystemTimeZoneById("Mountain Standard Time"));
                         golfer.LastUpdate = now.ToShortTimeString() + " " + now.ToShortDateString();
                         sendUpdate(golfer, repository);
                     }

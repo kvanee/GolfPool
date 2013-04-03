@@ -116,9 +116,7 @@
                         sortTableTimeout = setTimeout(sortTable, 500);
                     }
                 });
-            }
-
-            ;
+            };
 
             function teamListVM() {
                 var self = this;
@@ -135,6 +133,11 @@
                     });
                     self.teams(teamList);
                 };
+
+                self.hub.client.lastUpdated = function (lastUpdate) {
+                    $("#lastUpdatetxt").text(lastUpdate);
+                };
+
             }
 
             ;
@@ -151,7 +154,9 @@
 <br/>
 <br/>
 
-
+<div id="lastUpdate" style=" width: 100%;text-align: right; margin: 20px;">
+    last updated: <strong id="lastUpdatetxt">N/A</strong>
+</div>
 <div id="standings-container" class="container-fluid" style="width: 100%; height: 100%; position: relative">
     <div class="row-fluid header-row">
         <div class="span2"><strong>Team Name</strong></div>
