@@ -75,11 +75,13 @@
             }
 
             var sortTableTimeout;
-            function teamVM(id, teamName, context) {
+            function teamVM(id, teamName, ownerName, tieBreaker, context) {
                 var self = this;
                 self.hub = context.hub;
                 self.TeamID = id;
-                self.TeamName = teamName;
+                self.TeamName = ko.observable(teamName);
+                self.OwnerName = ko.observable(ownerName);
+                self.TieBreaker = ko.observable(tieBreaker);
                 self.Golfers = ko.observableArray([]);
 
                 self.Overall = ko.computed(function() {
@@ -90,6 +92,16 @@
                     }
                     return sum;
                 });
+                
+                self.showTeamInfo = function (data, event) {
+                    var teamDiv = $('#team-template').clone();
+                    teamDiv.find('.OwnerName').text(self.OwnerName());
+                    teamDiv.find('.TieBreaker').text(self.TieBreaker());
+                    $(event.srcElement).popover({ placement: 'bottom', html: true, content: teamDiv.html() }).popover('show');
+                };
+                self.hideTeamInfo = function (data, event) {
+                    $(event.srcElement).popover('destroy');
+                };
 
                 $.get('@Url.Action(MVC.Home.TeamGolfers())/' + id, function(golfers) {
                     self.Golfers(ko.utils.arrayMap(golfers, function(golfer) {
@@ -129,7 +141,7 @@
 
                 self.hub.client.InitTeamList = function(allTeams) {
                     var teamList = ko.utils.arrayMap(allTeams, function(team) {
-                        return new teamVM(team.TeamID, team.TeamName, self);
+                        return new teamVM(team.TeamID, team.TeamName, team.OwnerName, team.TieBreaker, self);
                     });
                     self.teams(teamList);
                 };
@@ -182,7 +194,7 @@
     </div>
     <!-- ko foreach: teams -->
     <div class="row-fluid table-row" style="position: relative;">
-        <div class="span2"><h5 data-bind="text: TeamName"></h5></div>
+        <div class="span2"><h5 data-bind="text: TeamName, event: {mouseover: showTeamInfo, mouseout: hideTeamInfo}"></h5></div>
         <!-- ko foreach: Golfers -->
         <div class="span1 text-center cell" data-bind="text: Score, event: {mouseover: showPlayerInfo, mouseout: hidePlayerInfo}"></div>
         <!-- /ko -->
@@ -192,7 +204,7 @@
 </div>
 
    
-    <div id="player-template" style="display: none;">
+<div id="player-template" style="display: none;">
     <table>
         <tr >
             <td colspan="5"><h4 class="Fullname"></h4> </td>
@@ -222,6 +234,19 @@
             <td class="Day2"></td>
             <td class="Day3"></td>
             <td class="Day4"></td>
+        </tr>
+    </table>
+</div>
+
+<div id="team-template" style="display: none;">
+    <table>
+        <tr >
+            <td colspan="2"><h4 class="OwnerName"></h4> </td>
+            
+        </tr>
+        <tr>
+            <td >Tie Breaker:</td>
+            <td class="TieBreaker"></td>
         </tr>
     </table>
 </div>
