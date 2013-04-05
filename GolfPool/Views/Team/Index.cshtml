@@ -28,6 +28,10 @@
     @Html.EditorFor(x => x.TeamName)
     @Html.ValidationMessageFor(x => x.TeamName)
     <br/>
+    @Html.LabelFor(model => model.TieBreaker)
+    @Html.EditorFor(x => x.TieBreaker)
+    @Html.ValidationMessageFor(x => x.TieBreaker)
+    <br/>
     <br/>
     @Html.LabelFor(model => model.Group1GolferID)
     @Html.DropDownListFor(model => model.Group1GolferID, Model.Group1PlayerOptions)

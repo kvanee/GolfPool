@@ -19,6 +19,9 @@ namespace GolfPool.Models
         [StringLength(20, MinimumLength = 3)]
         public string OwnerName { get; set; }
 
+        [DisplayName("Guess the winning score")]
+        public int TieBreaker { get; set; }
+
         public bool Paid { get; set; }
 
         [DisplayName("Group 1")]
