@@ -159,3 +159,10 @@ nav {
     -webkit-animation-duration: 5s;
     animation-duration: 5s;
 }
+
+
+@media (max-width: 767px) {
+header {
+    margin-bottom: 220px;
+}
+}
