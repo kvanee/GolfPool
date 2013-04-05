@@ -77,6 +77,9 @@ namespace GolfPool.Models
         {
             try
             {
+                if(DateTime.Now.Day < 9)
+                    return;
+
                 var now = TimeZoneInfo.ConvertTime(DateTime.Now,
                                                            TimeZoneInfo.FindSystemTimeZoneById("Mountain Standard Time"));
                 var repository = new Repository(new GolfPoolEntities());
