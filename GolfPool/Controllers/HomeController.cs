@@ -17,6 +17,12 @@ namespace GolfPool.Controllers
 
         public virtual ActionResult Standings()
         {
+
+            // Stop Caching in IE
+            Response.Cache.SetCacheability(System.Web.HttpCacheability.NoCache);
+
+            // Stop Caching in Firefox
+            Response.Cache.SetNoStore();
             var teams = repository.All<Team>();
             return View(teams);
         }
