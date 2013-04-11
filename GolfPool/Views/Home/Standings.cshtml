@@ -12,6 +12,8 @@
     <script type="text/javascript">
         $(function() {
 
+            setInterval("$.get('location.reload();')", 600000);
+
             function sortTable() {
                 var swapped = false;
                 var rows = $("#standings-container div.row-fluid").not(".header-row");
