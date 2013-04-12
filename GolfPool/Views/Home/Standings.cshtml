@@ -11,9 +11,7 @@
     <script type="text/javascript" src="~/signalr/hubs"></script>
     <script type="text/javascript">
         $(function() {
-
-            setInterval("location.reload();", 600000);
-
+            
             function sortTable() {
                 var swapped = false;
                 var rows = $("#standings-container div.row-fluid").not(".header-row");
@@ -111,6 +109,9 @@
                             golfer.Today, golfer.Thru, golfer.LastUpdate, golfer.Day1,
                          golfer.Day2,golfer.Day3,golfer.Day4);
                     }));
+                    if (sortTableTimeout != null)
+                        sortTableTimeout.clear();
+                    sortTableTimeout = setTimeout(sortTable, 500);
                 });
 
                 self.hub.on("golferUpdated", function(updatedGolfer) {
@@ -158,7 +159,9 @@
             var vm = new teamListVM();
             ko.applyBindings(vm);
             $.connection.hub.logging = true;
-            $.connection.hub.start(function() { vm.init(); });
+            $.connection.hub.start(function () { vm.init(); });
+            
+            setInterval("$.connection.leaderboardHub.server.getTeamList();", 600000);
         });
     </script>
 
