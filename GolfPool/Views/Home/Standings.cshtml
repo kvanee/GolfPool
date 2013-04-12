@@ -110,7 +110,7 @@
                          golfer.Day2,golfer.Day3,golfer.Day4);
                     }));
                     if (sortTableTimeout != null)
-                        sortTableTimeout.clear();
+                        clearTimeout(sortTableTimeout);
                     sortTableTimeout = setTimeout(sortTable, 500);
                 });
 
@@ -127,7 +127,7 @@
                         golfer.Day3(updatedGolfer.Day3);
                         golfer.Day4(updatedGolfer.Day4);
                         if(sortTableTimeout != null)
-                            sortTableTimeout.clear();
+                            clearTimeout(sortTableTimeout);
                         sortTableTimeout = setTimeout(sortTable, 500);
                     }
                 });
