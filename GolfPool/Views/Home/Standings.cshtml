@@ -12,6 +12,12 @@
     <script type="text/javascript">
         $(function() {
             
+            function reload() {
+                location.reload();
+            }
+
+            var reloadTimeout = setTimeout(reload, 360000);
+
             function sortTable() {
                 var swapped = false;
                 var rows = $("#standings-container div.row-fluid").not(".header-row");
@@ -129,6 +135,8 @@
                         if(sortTableTimeout != null)
                             clearTimeout(sortTableTimeout);
                         sortTableTimeout = setTimeout(sortTable, 500);
+                        clearTimeout(reloadTimeout);
+                        reloadTimeout = setTimeout(reload, 360000);
                     }
                 });
             };
