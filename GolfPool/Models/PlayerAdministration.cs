@@ -115,14 +115,14 @@ namespace GolfPool.Models
                     {
                         dirty |= golfer.UpdateScore(score);
                     }
-                    else if ((match.Groups["day3"].Value == "CUTT" || match.Groups["day3"].Value == "MC") && match.Groups["strokes"] != null)
+                    else if ((match.Groups["day3"].Value.Trim() == "CUTT" || match.Groups["day3"].Value.Trim() == "MC") && match.Groups["strokes"] != null)
                     {
                         int strokes;
                         string strokesText = match.Groups["strokes"].Value.Trim();
                         if (int.TryParse(strokesText, out strokes))
                         {
                             //160 = 72 + 8 * 2 (+8 for last two days)
-                            dirty |= golfer.UpdateScore((strokes + 160) / (72 * 4));
+                            dirty |= golfer.UpdateScore((strokes + 160) - (72 * 4));
                         }
                     }
                     else if (scoreText == "E" || scoreText == "-")
