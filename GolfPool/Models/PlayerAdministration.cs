@@ -115,10 +115,6 @@ namespace GolfPool.Models
                     {
                         dirty |= golfer.UpdateScore(score);
                     }
-                    else if (scoreText == "E" || scoreText == "-")
-                    {
-                        dirty |= golfer.UpdateScore(0);
-                    }
                     else if ((match.Groups["day3"].Value == "CUTT" || match.Groups["day3"].Value == "MC") && match.Groups["strokes"] != null)
                     {
                         int strokes;
@@ -126,8 +122,12 @@ namespace GolfPool.Models
                         if (int.TryParse(strokesText, out strokes))
                         {
                             //160 = 72 + 8 * 2 (+8 for last two days)
-                            dirty |= golfer.UpdateScore((strokes + 160)/(72*4));
+                            dirty |= golfer.UpdateScore((strokes + 160) / (72 * 4));
                         }
+                    }
+                    else if (scoreText == "E" || scoreText == "-")
+                    {
+                        dirty |= golfer.UpdateScore(0);
                     }
                     if (!string.IsNullOrWhiteSpace(match.Groups["position"].Value))
                     {
