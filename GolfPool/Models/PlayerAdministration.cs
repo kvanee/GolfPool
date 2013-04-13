@@ -119,7 +119,7 @@ namespace GolfPool.Models
                     {
                         dirty |= golfer.UpdateScore(0);
                     }
-                    else if ((scoreText == "MC" || match.Groups["day3"].Value == "MC") && match.Groups["strokes"] != null)
+                    else if ((scoreText == "CUTT" || match.Groups["day3"].Value == "CUTT" || match.Groups["day3"].Value == "MC") && match.Groups["strokes"] != null)
                     {
                         int strokes;
                         string strokesText = match.Groups["strokes"].Value.Trim();
