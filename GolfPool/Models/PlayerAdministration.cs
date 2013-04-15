@@ -18,7 +18,7 @@ namespace GolfPool.Models
         public static string headRegexStr = "<thead>(?s).*?</thead>";
         public static string activeRegex = "<tr(?s).*?<td .*?>(?<position>.*?)</td>(?s).*?<a .*?>(?<name>.*?)</a>(?s).*?<td .*?>(?<day1>.*?)</td>(?s).*?<td .*?>(?<day2>.*?)</td>(?s).*?<td .*?>(?<day3>.*?)</td>(?s).*?<td .*?>(?<day4>.*?)</td>(?s).*?<td .*?>(?<today>.*?)</td>(?s).*?<td .*?>(?<thru>.*?)</td>(?s).*?<td .*?>(?<score>.*?)</td>(?s).*?<td .*?>(?<strokes>.*?)</td>(?s).*?</tr>";
         public static string preRegex = "<tr(?s).*?<td(?s).*?<a .*?>(?<name>.*?)</a>(?s).*?<td .*?>(?<day1>.*?)</td>(?s).*?<td .*?>(?<day2>.*?)</td>(?s).*?<td .*?>(?<day3>.*?)</td>(?s).*?<td .*?>(?<day4>.*?)</td>(?s).*?<td .*?>(?<today>.*?)</td>(?s).*?<td .*?>(?<thru>.*?)</td>(?s).*?<td .*?>(?<score>.*?)</td>(?s).*?</tr>";
-        public static string postRegex = "<tr(?s).*?<td .*?>(?<position>.*?)</td>(?s).*?<a .*?>(?<name>.*?)</a>(?s).*?<td .*?>(?<day1>.*?)</td>(?s).*?<td .*?>(?<day2>.*?)</td>(?s).*?<td .*?>(?<day3>.*?)</td>(?s).*?<td .*?>(?<day4>.*?)</td>(?s).*?<td .*?>(?<today>.*?)</td>(?s).*?<td .*?>(?<score>.*?)</td>(?s).*?</tr>";
+        public static string postRegex = "<tr(?s).*?<td .*?>(?<position>.*?)</td>(?s).*?<a .*?>(?<name>.*?)</a>(?s).*?<td .*?>(?<day1>.*?)</td>(?s).*?<td .*?>(?<day2>.*?)</td>(?s).*?<td .*?>(?<day3>.*?)</td>(?s).*?<td .*?>(?<day4>.*?)</td>(?s).*?<td .*?>(?<today>.*?)</td>(?s).*?<td .*?>(?<x>.*?)</td>(?s).*?<td .*?>(?<score>.*?)</td>(?s).*?</tr>";
 
         public IEnumerable<Golfer> GetPlayers()
         {
@@ -78,8 +78,7 @@ namespace GolfPool.Models
             try
             {
 
-                var now = TimeZoneInfo.ConvertTime(DateTime.Now,
-                                                           TimeZoneInfo.FindSystemTimeZoneById("Mountain Standard Time"));
+                var now = TimeZoneInfo.ConvertTime(DateTime.Now, TimeZoneInfo.FindSystemTimeZoneById("Mountain Standard Time"));
                 var repository = new Repository(new GolfPoolEntities());
                 var webClient = new WebClient();
                 webClient.BaseAddress = sourceURL;
@@ -113,6 +112,10 @@ namespace GolfPool.Models
                     int score;
                     string scoreText = match.Groups["score"].Value.Trim();
                     if (int.TryParse(scoreText, out score))
+                    {
+                        dirty |= golfer.UpdateScore(score);
+                    } 
+                    else if (int.TryParse(scoreText, out score))
                     {
                         dirty |= golfer.UpdateScore(score);
                     }

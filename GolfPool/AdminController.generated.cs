@@ -53,6 +53,12 @@ namespace GolfPool.Controllers
         {
             return new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.EditTeam);
         }
+        [NonAction]
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public virtual System.Web.Mvc.ActionResult UpdateScores()
+        {
+            return new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.UpdateScores);
+        }
 
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         public AdminController Actions { get { return MVC.Admin; } }
@@ -76,6 +82,7 @@ namespace GolfPool.Controllers
             public readonly string UpdateLeaderboardSource = "UpdateLeaderboardSource";
             public readonly string EditPlayer = "EditPlayer";
             public readonly string EditTeam = "EditTeam";
+            public readonly string UpdateScores = "UpdateScores";
         }
 
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
@@ -88,6 +95,7 @@ namespace GolfPool.Controllers
             public const string UpdateLeaderboardSource = "UpdateLeaderboardSource";
             public const string EditPlayer = "EditPlayer";
             public const string EditTeam = "EditTeam";
+            public const string UpdateScores = "UpdateScores";
         }
 
 
@@ -113,6 +121,14 @@ namespace GolfPool.Controllers
         public ActionParamsClass_EditTeam EditTeamParams { get { return s_params_EditTeam; } }
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         public class ActionParamsClass_EditTeam
+        {
+            public readonly string id = "id";
+        }
+        static readonly ActionParamsClass_UpdateScores s_params_UpdateScores = new ActionParamsClass_UpdateScores();
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public ActionParamsClass_UpdateScores UpdateScoresParams { get { return s_params_UpdateScores; } }
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public class ActionParamsClass_UpdateScores
         {
             public readonly string id = "id";
         }
@@ -223,6 +239,16 @@ namespace GolfPool.Controllers
             var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.EditTeam);
             ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "id", id);
             EditTeamOverride(callInfo, id);
+            return callInfo;
+        }
+
+        partial void UpdateScoresOverride(T4MVC_System_Web_Mvc_ActionResult callInfo, int id);
+
+        public override System.Web.Mvc.ActionResult UpdateScores(int id)
+        {
+            var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.UpdateScores);
+            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "id", id);
+            UpdateScoresOverride(callInfo, id);
             return callInfo;
         }
 

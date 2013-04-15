@@ -108,6 +108,12 @@ namespace GolfPool.Controllers
         {
             throw new Exception("Not implemented.");
         }
+
+        public virtual ActionResult UpdateScores(int id)
+        {
+            PlayerAdministration.UpdateScoresFromSource(true);
+            return RedirectToAction(MVC.Admin.Index());
+        }
     }
 
     public class LeaderboardSourceVM
